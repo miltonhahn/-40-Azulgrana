@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<!-- saved from url=(0043)file:///C:/Users/mhahn/Downloads/index.html -->
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>+40 Azulgrana — Club Manager</title>
+<link href="./+40 Azulgrana — Club Manager_files/css2" rel="stylesheet">
+<style>
+  :root {
+    --azul: #003087;
+    --grana: #A50044;
+    --azul-dark: #001a4d;
+    --grana-dark: #7a0033;
+    --gold: #f5c842;
+    --bg: #0a0f1e;
+    --bg2: #0f1628;
+    --bg3: #161d35;
+    --surface: #1c2540;
+    --surface2: #222c4a;
+    --border: rgba(255,255,255,0.08);
+    --text: #e8eaf0;
+    --text2: #8b92b0;
+    --success: #22c55e;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Barlow', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; }
+
+  .sidebar { width: 240px; background: var(--bg2); border-right: 1px solid var(--border); display: flex; flex-direction: column; position: fixed; height: 100vh; z-index: 100; overflow-y: auto; }
+  .logo-area { padding: 22px 20px; border-bottom: 1px solid var(--border); background: linear-gradient(135deg, var(--azul-dark), var(--grana-dark)); position: relative; overflow: hidden; flex-shrink: 0; }
+  .logo-area::before { content: ''; position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: rgba(255,255,255,0.05); border-radius: 50%; }
+  .logo-badge { display: inline-block; background: linear-gradient(135deg,var(--azul),var(--grana)); color: white; font-family: 'Barlow Condensed',sans-serif; font-weight: 900; font-size: 11px; letter-spacing: 2px; padding: 3px 10px; border-radius: 20px; margin-bottom: 6px; text-transform: uppercase; }
+  .logo-name { font-family: 'Barlow Condensed',sans-serif; font-size: 26px; font-weight: 900; line-height: 1; color: white; }
+  .logo-sub { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 4px; letter-spacing: 1px; text-transform: uppercase; }
+  nav { padding: 12px 0; flex: 1; }
+  .nav-section { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--text2); padding: 10px 20px 4px; }
+  .nav-item { display: flex; align-items: center; gap: 12px; padding: 10px 20px; cursor: pointer; font-size: 14px; font-weight: 500; color: var(--text2); border-left: 3px solid transparent; transition: all 0.2s; }
+  .nav-item:hover { background: var(--surface); color: var(--text); border-left-color: rgba(255,255,255,0.2); }
+  .nav-item.active { background: var(--surface); color: white; border-left-color: var(--grana); }
+  .nav-item .icon { font-size: 17px; width: 22px; text-align: center; }
+  .sidebar-footer { padding: 14px 20px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text2); flex-shrink: 0; }
+  .manager-tag { display: flex; align-items: center; gap: 10px; }
+  .manager-avatar { width: 34px; height: 34px; background: linear-gradient(135deg,var(--azul),var(--grana)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Barlow Condensed',sans-serif; font-weight: 800; font-size: 14px; }
+  .manager-info strong { display: block; font-size: 13px; color: var(--text); }
+
+  .main { flex: 1; margin-left: 240px; display: flex; flex-direction: column; min-height: 100vh; }
+  .topbar { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 0 28px; height: 58px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+  .page-title { font-family: 'Barlow Condensed',sans-serif; font-size: 22px; font-weight: 700; letter-spacing: 1px; }
+  .content { padding: 24px 28px; flex: 1; }
+
+  .btn { padding: 9px 18px; border-radius: 8px; font-family: 'Barlow',sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; }
+  .btn-primary { background: var(--grana); color: white; }
+  .btn-primary:hover { background: var(--grana-dark); }
+  .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
+  .btn-outline:hover { background: var(--surface); }
+  .btn-sm { padding: 5px 12px; font-size: 12px; }
+  .btn-danger { background: var(--danger); color: white; }
+  .btn-success { background: var(--success); color: white; }
+  .btn-blue { background: var(--azul); color: white; }
+
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+  .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .card-title { font-family: 'Barlow Condensed',sans-serif; font-size: 15px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text2); }
+
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 22px; }
+  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px; position: relative; overflow: hidden; }
+  .stat-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .stat-card.blue::after { background: var(--azul); }
+  .stat-card.red::after { background: var(--grana); }
+  .stat-card.gold::after { background: var(--gold); }
+  .stat-card.green::after { background: var(--success); }
+  .stat-card.purple::after { background: #8b5cf6; }
+  .stat-num { font-family: 'Barlow Condensed',sans-serif; font-size: 40px; font-weight: 900; line-height: 1; }
+  .stat-label { font-size: 11px; color: var(--text2); margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
+  .stat-icon { font-size: 26px; position: absolute; right: 14px; top: 14px; opacity: 0.2; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+
+  .table { width: 100%; border-collapse: collapse; }
+  .table th { text-align: left; padding: 9px 12px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text2); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  .table td { padding: 10px 12px; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: middle; }
+  .table tr:hover td { background: var(--surface2); }
+  .table tr:last-child td { border-bottom: none; }
+
+  .badge { display: inline-block; padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
+  .badge-ok { background: rgba(34,197,94,0.15); color: #4ade80; }
+  .badge-warn { background: rgba(245,158,11,0.15); color: #fbbf24; }
+  .badge-danger { background: rgba(239,68,68,0.15); color: #f87171; }
+  .badge-blue { background: rgba(0,48,135,0.4); color: #93c5fd; }
+  .badge-grana { background: rgba(165,0,68,0.3); color: #fca5a5; }
+  .badge-purple { background: rgba(139,92,246,0.2); color: #c4b5fd; }
+
+  .player-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: all 0.2s; }
+  .player-card:hover { border-color: var(--azul); background: var(--surface2); }
+  .player-avatar { width: 44px; height: 44px; background: linear-gradient(135deg,var(--azul),var(--grana)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Barlow Condensed',sans-serif; font-weight: 800; font-size: 15px; flex-shrink: 0; }
+  .player-num { font-family: 'Barlow Condensed',sans-serif; font-size: 11px; color: var(--text2); }
+  .player-name-big { font-family: 'Barlow Condensed',sans-serif; font-size: 16px; font-weight: 700; }
+  .player-pos { font-size: 12px; color: var(--text2); }
+  .player-badges { display: flex; gap: 4px; margin-top: 4px; flex-wrap: wrap; }
+
+  .form-group { margin-bottom: 14px; }
+  .form-label { font-size: 11px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; display: block; }
+  .form-input, .form-select, .form-textarea { width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 9px 12px; color: var(--text); font-family: 'Barlow',sans-serif; font-size: 14px; outline: none; transition: border 0.2s; }
+  .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--azul); }
+  .form-textarea { resize: vertical; min-height: 70px; }
+  .form-select option { background: var(--bg3); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 200; align-items: center; justify-content: center; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; padding: 26px; width: 90%; max-width: 620px; max-height: 92vh; overflow-y: auto; }
+  .modal-title { font-family: 'Barlow Condensed',sans-serif; font-size: 22px; font-weight: 800; margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
+  .modal-footer { display: flex; gap: 10px; justify-content: flex-end; margin-top: 18px; border-top: 1px solid var(--border); padding-top: 18px; }
+
+  .fixture-match { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; display: flex; align-items: center; gap: 18px; margin-bottom: 10px; }
+  .fixture-date { text-align: center; min-width: 52px; }
+  .fixture-date .day { font-family: 'Barlow Condensed',sans-serif; font-size: 26px; font-weight: 900; line-height: 1; color: var(--grana); }
+  .fixture-date .month { font-size: 11px; color: var(--text2); text-transform: uppercase; letter-spacing: 1px; }
+  .fixture-sep { width: 1px; height: 38px; background: var(--border); }
+  .fixture-info { flex: 1; }
+  .fixture-teams { font-family: 'Barlow Condensed',sans-serif; font-size: 17px; font-weight: 700; }
+  .fixture-meta { font-size: 12px; color: var(--text2); margin-top: 2px; }
+  .fixture-score { font-family: 'Barlow Condensed',sans-serif; font-size: 28px; font-weight: 900; color: var(--gold); min-width: 72px; text-align: center; }
+
+  .field-container { position: relative; background: #1a4a1a; border-radius: 10px; overflow: hidden; aspect-ratio: 0.68; border: 2px solid #2d7a2d; }
+  .field-lines { position: absolute; inset: 0; border: 6px solid rgba(255,255,255,0.25); border-radius: 8px; }
+  .field-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 56px; height: 56px; border: 2px solid rgba(255,255,255,0.25); border-radius: 50%; }
+  .field-midline { position: absolute; top: 50%; left: 6px; right: 6px; height: 2px; background: rgba(255,255,255,0.25); }
+  .field-box-top { position: absolute; top: 6px; left: 22%; width: 56%; height: 18%; border: 2px solid rgba(255,255,255,0.25); border-top: none; }
+  .field-box-bot { position: absolute; bottom: 6px; left: 22%; width: 56%; height: 18%; border: 2px solid rgba(255,255,255,0.25); border-bottom: none; }
+  .player-dot { position: absolute; transform: translate(-50%,-50%); display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  .player-dot .dot { width: 30px; height: 30px; border-radius: 50%; background: var(--azul); border: 2px solid white; display: flex; align-items: center; justify-content: center; font-family: 'Barlow Condensed',sans-serif; font-weight: 800; font-size: 10px; }
+  .player-dot .dot-name { font-size: 8px; font-weight: 600; white-space: nowrap; background: rgba(0,0,0,0.8); padding: 1px 4px; border-radius: 4px; }
+
+  .tabs { display: flex; gap: 4px; margin-bottom: 18px; background: var(--surface); padding: 4px; border-radius: 10px; width: fit-content; }
+  .tab { padding: 7px 16px; border-radius: 7px; font-size: 13px; font-weight: 600; cursor: pointer; color: var(--text2); transition: all 0.2s; }
+  .tab.active { background: var(--azul); color: white; }
+  .tab:hover:not(.active) { color: var(--text); }
+
+  .page { display: none; }
+  .page.active { display: block; }
+
+  .notification { position: fixed; top: 20px; right: 20px; background: var(--surface2); border: 1px solid var(--success); border-radius: 10px; padding: 12px 18px; font-size: 14px; z-index: 999; transform: translateX(120%); transition: transform 0.3s; display: flex; align-items: center; gap: 10px; }
+  .notification.show { transform: translateX(0); }
+
+  .search-input { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 13px; color: var(--text); font-size: 14px; font-family: 'Barlow',sans-serif; outline: none; width: 220px; transition: border 0.2s; }
+  .search-input:focus { border-color: var(--azul); }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 4px; }
+
+  .nivel-bueno { color: #4ade80; }
+  .nivel-regular { color: #fbbf24; }
+  .nivel-malo { color: #f87171; }
+
+  .section-divider { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text2); padding: 4px 0 8px; border-bottom: 1px solid var(--border); margin-bottom: 14px; margin-top: 4px; }
+
+  @media (max-width: 900px) {
+    .stats-grid { grid-template-columns: repeat(2,1fr); }
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .form-row, .form-row-3 { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    .sidebar { width: 56px; }
+    .sidebar .logo-name, .sidebar .logo-sub, .sidebar .logo-badge, .sidebar .nav-section, .nav-item span:not(.icon), .sidebar-footer .manager-info { display: none; }
+    .nav-item { padding: 12px; justify-content: center; }
+    .main { margin-left: 56px; }
+    .content { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="logo-area">
+    <div class="logo-badge">+40 Senior</div>
+    <div class="logo-name">Azulgrana</div>
+    <div class="logo-sub">OBC · Club Manager</div>
+  </div>
+  <nav>
+    <div class="nav-section">Principal</div>
+    <div class="nav-item active" onclick="showPage(&#39;dashboard&#39;)"><span class="icon">🏠</span><span>Dashboard</span></div>
+    <div class="nav-section">Equipo</div>
+    <div class="nav-item" onclick="showPage(&#39;plantel&#39;)"><span class="icon">👥</span><span>Plantel</span></div>
+    <div class="nav-item" onclick="showPage(&#39;administracion&#39;)"><span class="icon">📋</span><span>Administración</span></div>
+    <div class="nav-section">Competencia</div>
+    <div class="nav-item" onclick="showPage(&#39;fixture&#39;)"><span class="icon">📅</span><span>Fixture</span></div>
+    <div class="nav-item" onclick="showPage(&#39;tacticas&#39;)"><span class="icon">⚽</span><span>Tácticas</span></div>
+    <div class="nav-item" onclick="showPage(&#39;estadisticas&#39;)"><span class="icon">📊</span><span>Estadísticas</span></div>
+    <div class="nav-item" onclick="showPage(&#39;talles&#39;)"><span class="icon">👕</span><span>Talles</span></div>
+    <div class="nav-section">Liga</div>
+    <div class="nav-item" onclick="showPage(&#39;liga&#39;)"><span class="icon">🏆</span><span>Liga Universitaria</span></div>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="manager-tag">
+      <div class="manager-avatar">DT</div>
+      <div class="manager-info"><strong>Manager / DT</strong>+40 Azulgrana</div>
+    </div>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="topbar">
+    <div class="page-title" id="pageTitle">Dashboard</div>
+    <div style="display:flex;align-items:center;gap:14px">
+      <span id="topbarDate" style="font-size:13px;color:var(--text2)">sábado, 28 de febrero de 2026</span>
+    </div>
+  </div>
+  <div class="content">
+
+    <!-- DASHBOARD -->
+    <div class="page active" id="page-dashboard">
+      <div class="stats-grid">
+        <div class="stat-card blue"><div class="stat-icon">👥</div><div class="stat-num" id="dash-total">42</div><div class="stat-label">Jugadores en Plantel</div></div>
+        <div class="stat-card red"><div class="stat-icon">🆔</div><div class="stat-num" id="dash-fichados">30</div><div class="stat-label">Jugadores Habilitados</div></div>
+        <div class="stat-card gold"><div class="stat-icon">🏥</div><div class="stat-num" id="dash-fichas">30</div><div class="stat-label">Fichas Médicas OK</div></div>
+        <div class="stat-card green"><div class="stat-icon">📅</div><div class="stat-num" id="dash-partidos">0</div><div class="stat-label">Partidos Jugados</div></div>
+      </div>
+      <div class="grid-2" style="margin-bottom:18px">
+        <div class="card">
+          <div class="card-header"><div class="card-title">⚠️ Alertas Urgentes</div></div>
+          <div id="dash-alertas"><div style="padding:8px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px">🔴 <strong>Carlos DeLeon</strong> — Ficha médica vencida (19/12/2025)</span><span class="badge badge-danger">No habilitado</span></div><div style="padding:8px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px">🔴 <strong>Rodrigo Paoletti</strong> — Ficha médica vencida (28/10/2025)</span><span class="badge badge-danger">No habilitado</span></div><div style="padding:8px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px">⚠️ <strong>Agustin Albanell</strong> — Ficha médica / carnet pendiente</span><span class="badge badge-warn">Condicional</span></div><div style="padding:8px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px">⚠️ <strong>Alfredo Bruce</strong> — Ficha médica / carnet pendiente</span><span class="badge badge-warn">Condicional</span></div><div style="padding:8px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px">⚠️ <strong>Nicolas Chiarino</strong> — Ficha médica / carnet pendiente</span><span class="badge badge-warn">Condicional</span></div><div style="padding:8px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px">⚠️ <strong>Ignacio Crosa</strong> — Ficha médica / carnet pendiente</span><span class="badge badge-warn">Condicional</span></div><div style="padding:8px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px">⚠️ <strong>Miguel Pelzel</strong> — Ficha médica / carnet pendiente</span><span class="badge badge-warn">Condicional</span></div><div style="padding:8px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px">⚠️ <strong>Agustin Perez del Castillo</strong> — Ficha médica / carnet pendiente</span><span class="badge badge-warn">Condicional</span></div><div style="padding:8px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px">⚠️ <strong>Manuel Reyes</strong> — Ficha médica / carnet pendiente</span><span class="badge badge-warn">Condicional</span></div><div style="padding:8px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px">⚠️ <strong>Horacio Roig</strong> — Ficha médica / carnet pendiente</span><span class="badge badge-warn">Condicional</span></div><div style="padding:8px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px">⚠️ <strong>Diego Terra</strong> — Ficha médica / carnet pendiente</span><span class="badge badge-warn">Condicional</span></div><div style="padding:8px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px">⚠️ <strong>Andrés Voulminot</strong> — Ficha médica / carnet pendiente</span><span class="badge badge-warn">Condicional</span></div></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">📅 Próximos Partidos</div></div>
+          <div id="dash-proximos"><div style="color:var(--text2);font-size:14px;padding:16px 0;text-align:center">No hay partidos programados</div></div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header"><div class="card-title">📊 Plantel por Posición</div></div>
+          <div id="dash-posiciones">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)">
+      <span style="font-size:14px">Arquero</span>
+      <span style="font-family:&#39;Barlow Condensed&#39;,sans-serif;font-size:20px;font-weight:700">1</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)">
+      <span style="font-size:14px">Defensor</span>
+      <span style="font-family:&#39;Barlow Condensed&#39;,sans-serif;font-size:20px;font-weight:700">15</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)">
+      <span style="font-size:14px">Mediocampista</span>
+      <span style="font-family:&#39;Barlow Condensed&#39;,sans-serif;font-size:20px;font-weight:700">12</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)">
+      <span style="font-size:14px">Delantero</span>
+      <span style="font-family:&#39;Barlow Condensed&#39;,sans-serif;font-size:20px;font-weight:700">14</span>
+    </div></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">🏆 Resultados del Torneo</div></div>
+          <div class="grid-3" style="text-align:center;padding:8px 0">
+            <div><div style="font-family:&#39;Barlow Condensed&#39;,sans-serif;font-size:38px;font-weight:900;color:var(--success)" id="dash-wins">0</div><div style="font-size:11px;color:var(--text2)">GANADOS</div></div>
+            <div><div style="font-family:&#39;Barlow Condensed&#39;,sans-serif;font-size:38px;font-weight:900;color:var(--warning)" id="dash-draws">0</div><div style="font-size:11px;color:var(--text2)">EMPATES</div></div>
+            <div><div style="font-family:&#39;Barlow Condensed&#39;,sans-serif;font-size:38px;font-weight:900;color:var(--danger)" id="dash-losses">0</div><div style="font-size:11px;color:var(--text2)">PERDIDOS</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PLANTEL -->
+    <div class="page" id="page-plantel">
+      <div style="display:flex;gap:10px;margin-bottom:18px;align-items:center;flex-wrap:wrap;">
+        <input class="search-input" type="text" id="searchPlantel" placeholder="🔍 Buscar jugador..." oninput="filterPlantel()">
+        <select class="form-select" style="width:150px" id="filterPos" onchange="filterPlantel()">
+          <option value="">Todas las posiciones</option>
+          <option>Arquero</option><option>Defensor</option><option>Mediocampista</option><option>Delantero</option>
+        </select>
+        <select class="form-select" style="width:130px" id="filterNivel" onchange="filterPlantel()">
+          <option value="">Todos los niveles</option>
+          <option>Bueno</option><option>Regular</option><option>A mejorar</option>
+        </select>
+        <div style="flex:1"></div>
+        <button class="btn btn-primary" onclick="openAddPlayer()">＋ Agregar</button>
+      </div>
+      <div id="plantel-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:10px;"></div>
+    </div>
+
+    <!-- ADMINISTRACION -->
+    <div class="page" id="page-administracion">
+      <div class="tabs">
+        <div class="tab active" onclick="switchAdminTab(&#39;carnet&#39;,this)">🆔 Carnet/Ficha</div>
+        <div class="tab" onclick="switchAdminTab(&#39;cuotas&#39;,this)">💰 Cuotas</div>
+        <div class="tab" onclick="switchAdminTab(&#39;medico&#39;,this)">🏥 Médico</div>
+        <div class="tab" onclick="switchAdminTab(&#39;reglamento&#39;,this)">📜 Reglamentario</div>
+      </div>
+
+      <div id="admin-carnet">
+        <div class="card">
+          <table class="table">
+            <thead><tr><th>#</th><th>Jugador</th><th>Cédula</th><th>N° Carnet</th><th>Carnet</th><th>Fichado</th><th>Vto. Ficha</th><th>Club</th></tr></thead>
+            <tbody id="carnet-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="admin-cuotas" style="display:none">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px">
+          <div>
+            <span class="badge badge-ok" id="cuotas-al-dia-count">— al día</span>
+            &nbsp;
+            <span class="badge badge-warn" id="cuotas-pendientes-count">— pendientes</span>
+          </div>
+          <div style="font-size:12px;color:var(--text2)">Hacé clic en los meses para marcar/desmarcar el pago</div>
+        </div>
+        <div class="card" style="overflow-x:auto">
+          <table class="table">
+            <thead><tr><th>Jugador</th><th>#</th><th>Feb</th><th>Mar</th><th>Abr</th><th>May</th><th>Jun</th><th>Estado</th></tr></thead>
+            <tbody id="cuotas-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="admin-medico" style="display:none">
+        <div class="card" style="overflow-x:auto">
+          <table class="table">
+            <thead><tr><th>Jugador</th><th>Edad</th><th>Ficha Médica</th><th>Vto. Apto</th><th>Estado</th><th>Lesiones / Obs.</th></tr></thead>
+            <tbody id="medico-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="admin-reglamento" style="display:none">
+        <div class="card" style="overflow-x:auto">
+          <table class="table">
+            <thead><tr><th>Jugador</th><th>Puesto</th><th>Nivel</th><th>Compromiso</th><th>Condición</th><th>Acciones</th></tr></thead>
+            <tbody id="reglamento-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- FIXTURE -->
+    <div class="page" id="page-fixture">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:12px">
+        <div class="tabs" style="margin:0">
+          <div class="tab active" onclick="switchFixtureTab(&#39;calendario&#39;,this)">📅 Próximos</div>
+          <div class="tab" onclick="switchFixtureTab(&#39;resultados&#39;,this)">🏆 Resultados</div>
+        </div>
+        <button class="btn btn-primary" onclick="openAddMatch()">＋ Cargar Partido</button>
+      </div>
+      <div id="fixture-calendario"><div id="fixture-list"></div></div>
+      <div id="fixture-resultados" style="display:none"><div id="resultados-list"></div></div>
+    </div>
+
+    <!-- TACTICAS -->
+    <div class="page" id="page-tacticas">
+      <div class="grid-2">
+        <div>
+          <div class="card" style="margin-bottom:16px">
+            <div class="card-header"><div class="card-title">⚙️ Formación y Alineación</div></div>
+            <div class="form-group">
+              <label class="form-label">Sistema Táctico</label>
+              <select class="form-select" id="formation-select" onchange="updateFormation()">
+                <option value="4-4-2">4-4-2</option>
+                <option value="4-3-3">4-3-3</option>
+                <option value="3-5-2">3-5-2</option>
+                <option value="5-3-2">5-3-2</option>
+                <option value="4-5-1">4-5-1</option>
+              </select>
+            </div>
+            <div id="lineup-slots"></div>
+            <button class="btn btn-primary btn-sm" style="margin-top:8px" onclick="saveTactics()">💾 Guardar Alineación</button>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">📝 Plan de Partido</div></div>
+            <div class="form-group">
+              <label class="form-label">Notas Tácticas</label>
+              <textarea class="form-textarea" id="tactical-notes" placeholder="Instrucciones para el equipo, marcaciones, pelota parada..."></textarea>
+            </div>
+            <button class="btn btn-outline btn-sm" onclick="saveTactics()">💾 Guardar</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">🟩 Vista de Cancha</div></div>
+          <div class="field-container" id="field-view">
+            <div class="field-lines"></div>
+            <div class="field-center"></div>
+            <div class="field-midline"></div>
+            <div class="field-box-top"></div>
+            <div class="field-box-bot"></div>
+            <div id="field-players"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ESTADISTICAS -->
+    <div class="page" id="page-estadisticas">
+      <div class="stats-grid" style="grid-template-columns:repeat(3,1fr)">
+        <div class="stat-card blue"><div class="stat-icon">⚽</div><div class="stat-num" id="stat-goles">0</div><div class="stat-label">Goles a Favor</div></div>
+        <div class="stat-card red"><div class="stat-icon">🔴</div><div class="stat-num" id="stat-gc">0</div><div class="stat-label">Goles en Contra</div></div>
+        <div class="stat-card gold"><div class="stat-icon">📈</div><div class="stat-num" id="stat-pts">0</div><div class="stat-label">Puntos</div></div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header"><div class="card-title">📋 Resumen de Partidos</div></div>
+          <div id="stats-partidos"></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">🟨 Disciplina</div></div>
+          <div id="stats-disciplina"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TALLES -->
+    <div class="page" id="page-talles">
+      <div class="card" style="margin-bottom:18px">
+        <div class="card-header"><div class="card-title">👕 Talles de Camiseta y Short</div></div>
+        <div style="overflow-x:auto">
+          <table class="table">
+            <thead><tr><th>#</th><th>Jugador</th><th>Puesto</th><th>Camiseta</th><th>Short</th></tr></thead>
+            <tbody id="talles-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header"><div class="card-title">📦 Resumen Talles Camiseta</div></div>
+          <div id="resumen-camiseta"></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">📦 Resumen Talles Short</div></div>
+          <div id="resumen-short"></div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- LIGA UNIVERSITARIA -->
+    <div class="page" id="page-liga">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:12px">
+        <div>
+          <div style="font-size:13px;color:var(--text2);margin-bottom:6px">Liga Universitaria de Deportes · Fútbol Más 40 "C"</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn btn-sm btn-outline" onclick="setLigaUrl(&#39;https://ligauniversitaria.org.uy/estadisticas-futbol-mas-40-c/&#39;)">📊 Estadísticas M40-C</button>
+            <button class="btn btn-sm btn-outline" onclick="setLigaUrl(&#39;https://ligauniversitaria.org.uy/estadisticas-detalle-historico-de-las-fechas/&#39;)">📅 Historial Fechas</button>
+            <button class="btn btn-sm btn-outline" onclick="setLigaUrl(&#39;https://ligauniversitaria.org.uy/estadisticas-detalle-historico-de-tablas-de-posiciones/&#39;)">🏅 Posiciones</button>
+            <button class="btn btn-sm btn-outline" onclick="setLigaUrl(&#39;https://ligauniversitaria.org.uy/fallos-y-penas-2/&#39;)">⚖️ Fallos y Penas</button>
+            <button class="btn btn-sm btn-outline" onclick="setLigaUrl(&#39;https://ligauniversitaria.org.uy/canchas/&#39;)">📍 Canchas</button>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <a id="liga-external-link" href="https://ligauniversitaria.org.uy/estadisticas-futbol-mas-40-c/" target="_blank" class="btn btn-sm btn-blue">↗ Abrir en nueva pestaña</a>
+        </div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden">
+        <div style="background:linear-gradient(135deg,var(--azul-dark),var(--grana-dark));padding:10px 16px;display:flex;align-items:center;gap:10px">
+          <span style="font-size:16px">🌐</span>
+          <span id="liga-url-display" style="font-size:12px;color:rgba(255,255,255,0.65);font-family:monospace;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">ligauniversitaria.org.uy</span>
+          <button class="btn btn-sm btn-outline" style="padding:3px 10px;font-size:11px;flex-shrink:0" onclick="reloadLigaFrame()">🔄 Recargar</button>
+        </div>
+        <div id="liga-iframe-wrap" style="position:relative">
+          <iframe id="liga-iframe" src="./+40 Azulgrana — Club Manager_files/saved_resource.html" style="width:100%;height:calc(100vh - 265px);min-height:580px;border:none;display:block;background:white" title="Liga Universitaria de Deportes"></iframe>
+        </div>
+        <div id="liga-blocked-msg" style="display:none;padding:60px 20px;text-align:center">
+          <div style="font-size:52px;margin-bottom:16px">🔒</div>
+          <div style="font-family:&#39;Barlow Condensed&#39;,sans-serif;font-size:24px;font-weight:700;margin-bottom:10px">El sitio bloquea la visualización embebida</div>
+          <div style="color:var(--text2);font-size:14px;margin-bottom:24px;max-width:400px;margin-left:auto;margin-right:auto">
+            La Liga Universitaria tiene configurado un bloqueo X-Frame-Options que impide mostrarse dentro de otras apps.<br><br>
+            Podés verla directamente haciendo clic abajo, o usar el link de nueva pestaña de arriba.
+          </div>
+          <a id="liga-blocked-link" href="https://ligauniversitaria.org.uy/estadisticas-futbol-mas-40-c/" target="_blank" class="btn btn-primary" style="font-size:15px;padding:12px 24px">🏆 Ver Liga Universitaria</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- MODAL Jugador -->
+<div class="modal-overlay" id="modal-player">
+  <div class="modal">
+    <div class="modal-title">👤 <span id="modal-player-title">Agregar Jugador</span></div>
+    <input type="hidden" id="edit-player-id">
+    <div class="section-divider">Datos Personales</div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Nombre *</label><input class="form-input" id="p-nombre" placeholder="Nombre completo"></div>
+      <div class="form-group"><label class="form-label">Apodo</label><input class="form-input" id="p-apodo" placeholder="Apodo"></div>
+    </div>
+    <div class="form-row-3">
+      <div class="form-group"><label class="form-label">N° Camiseta</label><input class="form-input" id="p-numero" type="number" min="1"></div>
+      <div class="form-group"><label class="form-label">Posición</label>
+        <select class="form-select" id="p-posicion">
+          <option>Arquero</option><option>Defensor</option><option>Mediocampista</option><option>Delantero</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Puesto Real</label><input class="form-input" id="p-puesto" placeholder="Golero, Lateral..."></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Cédula</label><input class="form-input" id="p-dni" placeholder="0000000-0"></div>
+      <div class="form-group"><label class="form-label">Edad</label><input class="form-input" id="p-edad" type="number"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Teléfono</label><input class="form-input" id="p-telefono" placeholder="+598..."></div>
+      <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="p-email" placeholder="email@..."></div>
+    </div>
+    <div class="section-divider">Situación Reglamentaria</div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">N° Carnet OBC</label><input class="form-input" id="p-carnet" placeholder="00000"></div>
+      <div class="form-group"><label class="form-label">Tiene Carnet</label>
+        <select class="form-select" id="p-tiene-carnet"><option value="si">✅ Sí</option><option value="no">❌ No</option></select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Fichado</label>
+        <select class="form-select" id="p-fichado"><option value="ok">✅ OK</option><option value="">❌ No</option></select>
+      </div>
+      <div class="form-group"><label class="form-label">Vto. Ficha</label><input class="form-input" id="p-vto-ficha" placeholder="dd/mm/aaaa"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Condición (auto)</label>
+        <select class="form-select" id="p-condicion" disabled="" style="opacity:0.6;cursor:not-allowed">
+          <option value="habilitado">✅ Habilitado</option>
+          <option value="condicional">⚠️ Condicional</option>
+          <option value="inhabilitado">❌ Inhabilitado</option>
+        </select>
+        <div style="font-size:11px;color:var(--text2);margin-top:4px">Se calcula automáticamente según ficha y fichaje</div>
+      </div>
+      <div class="form-group"><label class="form-label">Club</label><input class="form-input" id="p-club" placeholder="OBC Azulgrana / OBC..."></div>
+    </div>
+    <div class="section-divider">Médico y Rendimiento</div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Ficha Médica</label>
+        <select class="form-select" id="p-ficha">
+          <option value="ok">✅ OK / Vigente</option>
+          <option value="pendiente">⏳ Pendiente</option>
+          <option value="vencida">❌ Vencida</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Nivel</label>
+        <select class="form-select" id="p-nivel">
+          <option value="Bueno">⭐ Bueno</option>
+          <option value="Regular">👍 Regular</option>
+          <option value="A mejorar">📈 A mejorar</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Compromiso</label>
+        <select class="form-select" id="p-compromiso">
+          <option value="1-Alto">1-Alto</option>
+          <option value="2-Medio">2-Medio</option>
+          <option value="3-Bajo">3-Bajo</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Talle Camiseta</label>
+        <select class="form-select" id="p-talle-cam">
+          <option>M</option><option>L</option><option>XL</option><option>XXL</option><option>XXXL</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group"><label class="form-label">Talle Short</label>
+      <select class="form-select" id="p-talle-short" style="max-width:200px">
+        <option>M</option><option>L</option><option>XL</option><option>XXL</option><option>XXXL</option>
+      </select>
+    </div>
+    <div class="form-group"><label class="form-label">Lesiones / Observaciones</label>
+      <textarea class="form-textarea" id="p-lesiones" placeholder="Lesiones activas, limitaciones..."></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal(&#39;modal-player&#39;)">Cancelar</button>
+      <button class="btn btn-primary" onclick="savePlayer()">💾 Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL Ver Jugador -->
+<div class="modal-overlay" id="modal-player-view">
+  <div class="modal">
+    <div id="player-view-content"></div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal(&#39;modal-player-view&#39;)">Cerrar</button>
+      <button class="btn btn-outline" id="view-edit-btn">✏️ Editar</button>
+      <button class="btn btn-danger btn-sm" id="view-delete-btn">🗑️ Eliminar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL Partido -->
+<div class="modal-overlay" id="modal-match">
+  <div class="modal">
+    <div class="modal-title">📅 Cargar Partido</div>
+    <input type="hidden" id="edit-match-id">
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Rival *</label><input class="form-input" id="m-rival" placeholder="Nombre del rival"></div>
+      <div class="form-group"><label class="form-label">Fecha</label><input class="form-input" id="m-fecha" type="date"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Hora</label><input class="form-input" id="m-hora" type="time"></div>
+      <div class="form-group"><label class="form-label">Lugar</label><input class="form-input" id="m-lugar" placeholder="Cancha / dirección"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Condición</label>
+        <select class="form-select" id="m-condicion"><option value="local">🏠 Local</option><option value="visitante">✈️ Visitante</option></select>
+      </div>
+      <div class="form-group"><label class="form-label">Torneo / Fase</label><input class="form-input" id="m-torneo" placeholder="Liga, Copa..."></div>
+    </div>
+    <div style="margin-bottom:12px"><label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:14px"><input type="checkbox" id="m-jugado" onchange="toggleResultado()"> ¿Ya se jugó?</label></div>
+    <div id="resultado-section" style="display:none">
+      <div class="section-divider">Resultado</div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Goles Azulgrana</label><input class="form-input" id="m-goles-a" type="number" min="0" value="0"></div>
+        <div class="form-group"><label class="form-label">Goles Rival</label><input class="form-input" id="m-goles-r" type="number" min="0" value="0"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Amarillas</label><input class="form-input" id="m-amarillas" type="number" min="0" value="0"></div>
+        <div class="form-group"><label class="form-label">Rojas</label><input class="form-input" id="m-rojas" type="number" min="0" value="0"></div>
+      </div>
+      <div class="form-group"><label class="form-label">Notas del Partido</label><textarea class="form-textarea" id="m-notas" placeholder="Observaciones, destacados..."></textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal(&#39;modal-match&#39;)">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveMatch()">💾 Guardar</button>
+    </div>
+  </div>
+</div>
+
+<div class="notification" id="notification"><span>✅</span><span id="notif-text"></span></div>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+const INITIAL_PLAYERS = [{"id": 1, "nombre": "Ignacio Aguerre", "apodo": "", "numero": 3, "posicion": "Defensor", "puestoReal": "Lateral", "telefono": "", "email": "", "dni": "3763276-5", "nacimiento": "", "edad": 42, "ficha": "ok", "vtoApto": "23/2/2026", "fichado": true, "carnet": "19129", "tieneCarnet": true, "condicion": "habilitado", "seguro": "si", "lesiones": "", "club": "OBC Azulgrana", "compromiso": "1-Alto", "nivel": "Bueno", "talleCamiseta": "L", "talleShort": "M"}, {"id": 2, "nombre": "Agustin Albanell", "apodo": "", "numero": 27, "posicion": "Defensor", "puestoReal": "Central", "telefono": "", "email": "", "dni": "3723147-8", "nacimiento": "", "edad": 43, "ficha": "pendiente", "vtoApto": "", "fichado": false, "carnet": "", "tieneCarnet": false, "condicion": "habilitado", "seguro": "no", "lesiones": "", "club": "", "compromiso": "2-Medio", "nivel": "Regular", "talleCamiseta": "XXL", "talleShort": "XL"}, {"id": 3, "nombre": "Martin Beyhaut", "apodo": "", "numero": 49, "posicion": "Defensor", "puestoReal": "Lateral", "telefono": "", "email": "", "dni": "2869020-7", "nacimiento": "", "edad": 50, "ficha": "ok", "vtoApto": "10/5/2026", "fichado": true, "carnet": "12383", "tieneCarnet": true, "condicion": "habilitado", "seguro": "si", "lesiones": "", "club": "OBC Azulgrana", "compromiso": "1-Alto", "nivel": "Regular", "talleCamiseta": "XL", "talleShort": "L"}, {"id": 4, "nombre": "Guillermo Boullosa", "apodo": "", "numero": 10, "posicion": "Delantero", "puestoReal": "Delantero", "telefono": "", "email": "", "dni": "3170709-1", "nacimiento": "", "edad": 48, "ficha": "ok", "vtoApto": "22/3/2027", "fichado": true, "carnet": "13293", "tieneCarnet": true, "condicion": "habilitado", "seguro": "si", "lesiones": "", "club": "OBC Azulgrana", "compromiso": "1-Alto", "nivel": "Bueno", "talleCamiseta": "L", "talleShort": "L"}, {"id": 5, "nombre": "Patrick Brown", "apodo": "", "numero": 14, "posicion": "Mediocampista", "puestoReal": "Volante", "telefono": "", "email": "", "dni": "3271271-6", "nacimiento": "", "edad": 42, "ficha": "ok", "vtoApto": "13/8/2027", "fichado": true, "carnet": "22957", "tieneCarnet": true, "condicion": "habilitado", "seguro": "si", "lesiones": "", "club": "OBC Azulgrana", "compromiso": "2-Medio", "nivel": "Regular", "talleCamiseta": "L", "talleShort": "L"}, {"id": 6, "nombre": "Alfredo Bruce", "apodo": "", "numero": 18, "posicion": "Delantero", "puestoReal": "Delantero", "telefono": "", "email": "", "dni": "", "nacimiento": "", "edad": 46, "ficha": "pendiente", "vtoApto": "", "fichado": false, "carnet": "", "tieneCarnet": false, "condicion": "habilitado", "seguro": "no", "lesiones": "", "club": "", "compromiso": "2-Medio", "nivel": "Regular", "talleCamiseta": "L", "talleShort": "M"}, {"id": 7, "nombre": "Santiago Cardoso", "apodo": "", "numero": 4, "posicion": "Defensor", "puestoReal": "Central", "telefono": "", "email": "", "dni": "2527823-0", "nacimiento": "", "edad": 50, "ficha": "ok", "vtoApto": "22/3/2027", "fichado": true, "carnet": "26936", "tieneCarnet": true, "condicion": "habilitado", "seguro": "si", "lesiones": "", "club": "OBC Azulgrana", "compromiso": "3-Bajo", "nivel": "A mejorar", "talleCamiseta": "XL", "talleShort": "L"}, {"id": 8, "nombre": "Sebastian Cardoso", "apodo": "", "numero": 11, "posicion": "Delantero", "puestoReal": "Delantero", "telefono": "", "email": "", "dni": "3954347-7", "nacimiento": "", "edad": 44, "ficha": "ok", "vtoApto": "", "fichado": true, "carnet": "17134", "tieneCarnet": true, "condicion": "habilitado", "seguro": "si", "lesiones": "", "club": "OBC", "compromiso": "1-Alto", "nivel": "Bueno", "talleCamiseta": "L", "talleShort": "L"}, {"id": 9, "nombre": "Francisco Cardoso", "apodo": "", "numero": 12, "posicion": "Defensor", "puestoReal": "Central", "telefono": "", "email": "", "dni": "3286831-9", "nacimiento": "", "edad": 44, "ficha": "ok", "vtoApto": "", "fichado": true, "carnet": "34428", "tieneCarnet": true, "condicion": "habilitado", "seguro": "si", "lesiones": "", "club": "OBC", "compromiso": "2-Medio", "nivel": "Bueno", "talleCamiseta": "L", "talleShort": "M"}, {"id": 10, "nombre": "Andres Chanhazaroff", "apodo": "", "numero": 1, "posicion": "Arquero", "puestoReal": "Golero", "telefono": "", "email": "", "dni": "1848504-2", "nacimiento": "", "edad": 52, "ficha": "ok", "vtoApto": "25/3/2027", "fichado": true, "carnet": "13582", "tieneCarnet": true, "condicion": "habilitado", "seguro": "si", "lesiones": "", "club": "OBC Azulgrana", "compromiso": "1-Alto", "nivel": "Bueno", "talleCamiseta": "XL", "talleShort": "XL"}, {"id": 11, "nombre": "Nicolas Chiarino", "apodo": "", "numero": 33, "posicion": "Defensor", "puestoReal": "Central", "telefono": "", "email": "", "dni": "3333143-2", "nacimiento": "", "edad": 43, "ficha": "pendiente", "vtoApto": "", "fichado": false, "carnet": "", "tieneCarnet": false, "condicion": "habilitado", "seguro": "no", "lesiones": "", "club": "", "compromiso": "2-Medio", "nivel": "Regular", "talleCamiseta": "L", "talleShort": "M"}, {"id": 12, "nombre": "Matias Cikato", "apodo": "", "numero": 15, "posicion": "Defensor", "puestoReal": "Lateral", "telefono": "", "email": "", "dni": "3234917-9", "nacimiento": "", "edad": 46, "ficha": "ok", "vtoApto": "17/3/2026", "fichado": true, "carnet": "18109", "tieneCarnet": true, "condicion": "habilitado", "seguro": "si", "lesiones": "", "club": "OBC Azulgrana", "compromiso": "1-Alto", "nivel": "A mejorar", "talleCamiseta": "XL", "talleShort": "M"}, {"id": 13, "nombre": "Ignacio Crosa", "apodo": "", "numero": 16, "posicion": "Delantero", "puestoReal": "Delantero", "telefono": "", "email": "", "dni": "", "nacimiento": "", "edad": 0, "ficha": "pendiente", "vtoApto": "", "fichado": false, "carnet": "", "tieneCarnet": false, "condicion": "habilitado", "seguro": "no", "lesiones": "", "club": "OBC", "compromiso": "3-Bajo", "nivel": "Bueno", "talleCamiseta": "XL", "talleShort": "L"}, {"id": 14, "nombre": "Santiago Curiel", "apodo": "", "numero": 23, "posicion": "Mediocampista", "puestoReal": "Cinco", "telefono": "", "email": "", "dni": "3063199-6", "nacimiento": "", "edad": 43, "ficha": "ok", "vtoApto": "", "fichado": true, "carnet": "23457", "tieneCarnet": true, "condicion": "habilitado", "seguro": "si", "lesiones": "", "club": "OBC", "compromiso": "1-Alto", "nivel": "Bueno", "talleCamiseta": "XL", "talleShort": "L"}, {"id": 15, "nombre": "Nicolas D'Angelo", "apodo": "", "numero": 76, "posicion": "Delantero", "puestoReal": "Delantero", "telefono": "", "email": "", "dni": "3104061-5", "nacimiento": "", "edad": 49, "ficha": "ok", "vtoApto": "25/3/2027", "fichado": true, "carnet": "13709", "tieneCarnet": true, "condicion": "habilitado", "seguro": "si", "lesiones": "", "club": "OBC Azulgrana", "compromiso": "1-Alto", "nivel": "Regular", "talleCamiseta": "L", "talleShort": "M"}, {"id": 16, "nombre": "Fernando de la Fuente", "apodo": "", "numero": 7, "posicion": "Mediocampista", "puestoReal": "Volante", "telefono": "", "email": "", "dni": "4166752-8", "nacimiento": "", "edad": 41, "ficha": "ok", "vtoApto": "12/3/2027", "fichado": true, "carnet": "21998", "tieneCarnet": true, "condicion": "habilitado", "seguro": "si", "lesiones": "", "club": "OBC", "compromiso": "3-Bajo", "nivel": "Bueno", "talleCamiseta": "L", "talleShort": "L"}, {"id": 17, "nombre": "Carlos DeLeon", "apodo": "", "numero": 8, "posicion": "Mediocampista", "puestoReal": "Volante", "telefono": "", "email": "", "dni": "3432280-4", "nacimiento": "", "edad": 42, "ficha": "vencida", "vtoApto": "19/12/2025", "fichado": true, "carnet": "22956", "tieneCarnet": true, "condicion": "habilitado", "seguro": "si", "lesiones": "", "club": "", "compromiso": "2-Medio", "nivel": "Regular", "talleCamiseta": "L", "talleShort": "M"}, {"id": 18, "nombre": "Matias Falcon", "apodo": "", "numero": 77, "posicion": "Mediocampista", "puestoReal": "Volante", "telefono": "", "email": "", "dni": "2850345-4", "nacimiento": "", "edad": 46, "ficha": "ok", "vtoApto": "26/3/2027", "fichado": true, "carnet": "16326", "tieneCarnet": true, "condicion": "habilitado", "seguro": "si", "lesiones": "", "club": "OBC Azulgrana", "compromiso": "2-Medio", "nivel": "A mejorar", "talleCamiseta": "XL", "talleShort": "L"}, {"id": 19, "nombre": "Jose Juan Garcia Arocena", "apodo": "", "numero": 28, "posicion": "Delantero", "puestoReal": "Delantero", "telefono": "", "email": "", "dni": "4488952-9", "nacimiento": "", "edad": 0, "ficha": "ok", "vtoApto": "26/3/2027", "fichado": true, "carnet": "27994", "tieneCarnet": false, "condicion": "habilitado", "seguro": "no", "lesiones": "", "club": "OBC Azulgrana", "compromiso": "2-Medio", "nivel": "Bueno", "talleCamiseta": "M", "talleShort": "M"}, {"id": 20, "nombre": "Nicolas Giordano", "apodo": "", "numero": 19, "posicion": "Delantero", "puestoReal": "Delantero", "telefono": "", "email": "", "dni": "3360904-9", "nacimiento": "", "edad": 48, "ficha": "ok", "vtoApto": "28/5/2027", "fichado": true, "carnet": "15517", "tieneCarnet": true, "condicion": "habilitado", "seguro": "si", "lesiones": "", "club": "OBC Azulgrana", "compromiso": "1-Alto", "nivel": "A mejorar", "talleCamiseta": "XXL", "talleShort": "L"}, {"id": 21, "nombre": "Milton Hahn", "apodo": "", "numero": 6, "posicion": "Defensor", "puestoReal": "Lateral", "telefono": "", "email": "", "dni": "3034464-4", "nacimiento": "", "edad": 49, "ficha": "ok", "vtoApto": "22/3/2027", "fichado": true, "carnet": "14920", "tieneCarnet": true, "condicion": "habilitado", "seguro": "si", "lesiones": "", "club": "OBC Azulgrana", "compromiso": "1-Alto", "nivel": "Regular", "talleCamiseta": "XL", "talleShort": "L"}, {"id": 22, "nombre": "Jose Andres Mailhos", "apodo": "", "numero": 81, "posicion": "Delantero", "puestoReal": "Delantero", "telefono": "", "email": "", "dni": "1892201-4", "nacimiento": "", "edad": 50, "ficha": "ok", "vtoApto": "22/3/2027", "fichado": true, "carnet": "17089", "tieneCarnet": true, "condicion": "habilitado", "seguro": "si", "lesiones": "", "club": "OBC Azulgrana", "compromiso": "3-Bajo", "nivel": "A mejorar", "talleCamiseta": "XXL", "talleShort": "XXL"}, {"id": 23, "nombre": "Damian Martinelli", "apodo": "", "numero": 67, "posicion": "Delantero", "puestoReal": "Delantero", "telefono": "", "email": "", "dni": "3594221-7", "nacimiento": "", "edad": 42, "ficha": "ok", "vtoApto": "21/10/2027", "fichado": true, "carnet": "21102", "tieneCarnet": true, "condicion": "habilitado", "seguro": "si", "lesiones": "", "club": "OBC Azulgrana", "compromiso": "1-Alto", "nivel": "Bueno", "talleCamiseta": "L", "talleShort": "M"}, {"id": 24, "nombre": "Juan Luis Mastroianni", "apodo": "", "numero": 26, "posicion": "Mediocampista", "puestoReal": "Volante", "telefono": "", "email": "", "dni": "", "nacimiento": "", "edad": 0, "ficha": "ok", "vtoApto": "", "fichado": true, "carnet": "", "tieneCarnet": false, "condicion": "habilitado", "seguro": "no", "lesiones": "", "club": "", "compromiso": "3-Bajo", "nivel": "Regular", "talleCamiseta": "XL", "talleShort": "XL"}, {"id": 25, "nombre": "Agustin Medero", "apodo": "", "numero": 21, "posicion": "Mediocampista", "puestoReal": "Volante", "telefono": "", "email": "", "dni": "3720634-4", "nacimiento": "", "edad": 42, "ficha": "ok", "vtoApto": "25/3/2027", "fichado": true, "carnet": "21954", "tieneCarnet": true, "condicion": "habilitado", "seguro": "si", "lesiones": "", "club": "OBC Azulgrana", "compromiso": "1-Alto", "nivel": "A mejorar", "talleCamiseta": "XL", "talleShort": "L"}, {"id": 26, "nombre": "Nicolas Montero", "apodo": "", "numero": 13, "posicion": "Mediocampista", "puestoReal": "Cinco", "telefono": "", "email": "", "dni": "6622974-3", "nacimiento": "", "edad": 42, "ficha": "ok", "vtoApto": "3/4/2027", "fichado": true, "carnet": "65743", "tieneCarnet": true, "condicion": "habilitado", "seguro": "si", "lesiones": "", "club": "OBC Azulgrana", "compromiso": "1-Alto", "nivel": "Bueno", "talleCamiseta": "XL", "talleShort": "L"}, {"id": 27, "nombre": "Felipe Muxi", "apodo": "", "numero": 22, "posicion": "Defensor", "puestoReal": "Lateral", "telefono": "", "email": "", "dni": "3327912-7", "nacimiento": "", "edad": 45, "ficha": "ok", "vtoApto": "24/3/2027", "fichado": true, "carnet": "30597", "tieneCarnet": true, "condicion": "habilitado", "seguro": "si", "lesiones": "", "club": "OBC Azulgrana", "compromiso": "1-Alto", "nivel": "Regular", "talleCamiseta": "XL", "talleShort": "L"}, {"id": 28, "nombre": "Rodrigo Nahum", "apodo": "", "numero": 40, "posicion": "Defensor", "puestoReal": "Lateral", "telefono": "", "email": "", "dni": "3141482-0", "nacimiento": "", "edad": 45, "ficha": "ok", "vtoApto": "14/5/2027", "fichado": true, "carnet": "16350", "tieneCarnet": true, "condicion": "habilitado", "seguro": "si", "lesiones": "", "club": "OBC Azulgrana", "compromiso": "1-Alto", "nivel": "A mejorar", "talleCamiseta": "XL", "talleShort": "XL"}, {"id": 29, "nombre": "Rodrigo Paoletti", "apodo": "", "numero": 32, "posicion": "Defensor", "puestoReal": "Central", "telefono": "", "email": "", "dni": "5918446-5", "nacimiento": "", "edad": 46, "ficha": "vencida", "vtoApto": "28/10/2025", "fichado": true, "carnet": "66367", "tieneCarnet": true, "condicion": "habilitado", "seguro": "si", "lesiones": "", "club": "OBC Azulgrana", "compromiso": "2-Medio", "nivel": "A mejorar", "talleCamiseta": "XXXL", "talleShort": "XXXL"}, {"id": 30, "nombre": "Miguel Pelzel", "apodo": "", "numero": 29, "posicion": "Delantero", "puestoReal": "Delantero", "telefono": "", "email": "", "dni": "3558514-4", "nacimiento": "", "edad": 42, "ficha": "pendiente", "vtoApto": "", "fichado": false, "carnet": "", "tieneCarnet": false, "condicion": "habilitado", "seguro": "no", "lesiones": "", "club": "", "compromiso": "2-Medio", "nivel": "Regular", "talleCamiseta": "XL", "talleShort": "XL"}, {"id": 31, "nombre": "Matias Perez del Castillo", "apodo": "", "numero": 5, "posicion": "Mediocampista", "puestoReal": "Cinco", "telefono": "", "email": "", "dni": "3892158-3", "nacimiento": "", "edad": 44, "ficha": "ok", "vtoApto": "", "fichado": true, "carnet": "16314", "tieneCarnet": true, "condicion": "habilitado", "seguro": "si", "lesiones": "", "club": "OBC", "compromiso": "1-Alto", "nivel": "Bueno", "talleCamiseta": "L", "talleShort": "M"}, {"id": 32, "nombre": "Agustin Perez del Castillo", "apodo": "", "numero": 17, "posicion": "Mediocampista", "puestoReal": "Cinco", "telefono": "", "email": "", "dni": "", "nacimiento": "", "edad": 0, "ficha": "pendiente", "vtoApto": "", "fichado": false, "carnet": "", "tieneCarnet": false, "condicion": "habilitado", "seguro": "no", "lesiones": "", "club": "", "compromiso": "3-Bajo", "nivel": "Bueno", "talleCamiseta": "L", "talleShort": "M"}, {"id": 33, "nombre": "Manuel Reyes", "apodo": "", "numero": 75, "posicion": "Delantero", "puestoReal": "Delantero", "telefono": "", "email": "", "dni": "", "nacimiento": "", "edad": 0, "ficha": "pendiente", "vtoApto": "", "fichado": false, "carnet": "", "tieneCarnet": false, "condicion": "habilitado", "seguro": "no", "lesiones": "", "club": "", "compromiso": "3-Bajo", "nivel": "Regular", "talleCamiseta": "XL", "talleShort": "L"}, {"id": 34, "nombre": "Gustavo Risso", "apodo": "", "numero": 9, "posicion": "Defensor", "puestoReal": "Central", "telefono": "", "email": "", "dni": "3188941-5", "nacimiento": "", "edad": 48, "ficha": "ok", "vtoApto": "25/3/2027", "fichado": true, "carnet": "15512", "tieneCarnet": true, "condicion": "habilitado", "seguro": "si", "lesiones": "", "club": "OBC Azulgrana", "compromiso": "2-Medio", "nivel": "Bueno", "talleCamiseta": "L", "talleShort": "M"}, {"id": 35, "nombre": "Horacio Roig", "apodo": "", "numero": 25, "posicion": "Delantero", "puestoReal": "Delantero", "telefono": "", "email": "", "dni": "3857744-3", "nacimiento": "", "edad": 43, "ficha": "pendiente", "vtoApto": "", "fichado": false, "carnet": "", "tieneCarnet": false, "condicion": "habilitado", "seguro": "no", "lesiones": "", "club": "", "compromiso": "2-Medio", "nivel": "Regular", "talleCamiseta": "M", "talleShort": "M"}, {"id": 36, "nombre": "Marcos Saiz", "apodo": "", "numero": 2, "posicion": "Defensor", "puestoReal": "Central", "telefono": "", "email": "", "dni": "3283448-3", "nacimiento": "", "edad": 42, "ficha": "ok", "vtoApto": "", "fichado": true, "carnet": "18506", "tieneCarnet": true, "condicion": "habilitado", "seguro": "si", "lesiones": "", "club": "OBC", "compromiso": "2-Medio", "nivel": "Regular", "talleCamiseta": "XXL", "talleShort": "L"}, {"id": 37, "nombre": "Diego Saralegui", "apodo": "", "numero": 95, "posicion": "Defensor", "puestoReal": "Lateral", "telefono": "", "email": "", "dni": "3385651-3", "nacimiento": "", "edad": 43, "ficha": "ok", "vtoApto": "", "fichado": true, "carnet": "", "tieneCarnet": true, "condicion": "habilitado", "seguro": "si", "lesiones": "", "club": "OBC", "compromiso": "1-Alto", "nivel": "Bueno", "talleCamiseta": "XL", "talleShort": "L"}, {"id": 38, "nombre": "Rodrigo Soto", "apodo": "", "numero": 24, "posicion": "Defensor", "puestoReal": "Central", "telefono": "", "email": "", "dni": "3369470-1", "nacimiento": "", "edad": 42, "ficha": "ok", "vtoApto": "25/3/2027", "fichado": true, "carnet": "19522", "tieneCarnet": true, "condicion": "habilitado", "seguro": "si", "lesiones": "", "club": "OBC", "compromiso": "2-Medio", "nivel": "Regular", "talleCamiseta": "XXL", "talleShort": "XL"}, {"id": 39, "nombre": "Diego Terra", "apodo": "", "numero": 30, "posicion": "Delantero", "puestoReal": "Delantero", "telefono": "", "email": "", "dni": "", "nacimiento": "", "edad": 0, "ficha": "pendiente", "vtoApto": "", "fichado": false, "carnet": "", "tieneCarnet": false, "condicion": "habilitado", "seguro": "no", "lesiones": "", "club": "", "compromiso": "3-Bajo", "nivel": "A mejorar", "talleCamiseta": "XL", "talleShort": "L"}, {"id": 40, "nombre": "Facundo Torres", "apodo": "", "numero": 44, "posicion": "Delantero", "puestoReal": "Delantero", "telefono": "", "email": "", "dni": "3385205-6", "nacimiento": "", "edad": 50, "ficha": "ok", "vtoApto": "21/3/2027", "fichado": true, "carnet": "11824", "tieneCarnet": true, "condicion": "habilitado", "seguro": "si", "lesiones": "", "club": "OBC Azulgrana", "compromiso": "2-Medio", "nivel": "Regular", "talleCamiseta": "L", "talleShort": "L"}, {"id": 41, "nombre": "Marcos Villanueva", "apodo": "", "numero": 20, "posicion": "Mediocampista", "puestoReal": "Volante", "telefono": "", "email": "", "dni": "5863817-0", "nacimiento": "", "edad": 44, "ficha": "ok", "vtoApto": "23/4/2027", "fichado": true, "carnet": "65745", "tieneCarnet": true, "condicion": "habilitado", "seguro": "si", "lesiones": "", "club": "OBC Azulgrana", "compromiso": "1-Alto", "nivel": "Bueno", "talleCamiseta": "XL", "talleShort": "L"}, {"id": 42, "nombre": "Andrés Voulminot", "apodo": "", "numero": 65, "posicion": "Mediocampista", "puestoReal": "Volante", "telefono": "", "email": "", "dni": "3325817-7", "nacimiento": "", "edad": 43, "ficha": "pendiente", "vtoApto": "", "fichado": false, "carnet": "", "tieneCarnet": false, "condicion": "habilitado", "seguro": "no", "lesiones": "", "club": "OBC Azulgrana", "compromiso": "2-Medio", "nivel": "Regular", "talleCamiseta": "L", "talleShort": "L"}];
+
+function loadPlayers() {
+  const saved = localStorage.getItem('ag_players_v2');
+  if (saved) {
+    try { return JSON.parse(saved); } catch(e) {}
+  }
+  // First run: save initial players
+  localStorage.setItem('ag_players_v2', JSON.stringify(INITIAL_PLAYERS));
+  return INITIAL_PLAYERS.map(p => ({...p}));
+}
+
+let players = loadPlayers();
+let matches = JSON.parse(localStorage.getItem('ag_matches') || '[]');
+let tactics = JSON.parse(localStorage.getItem('ag_tactics') || '{}');
+let cuotas = JSON.parse(localStorage.getItem('ag_cuotas') || '{}');
+
+function savePlayers() { localStorage.setItem('ag_players_v2', JSON.stringify(players)); }
+function saveMatches() { localStorage.setItem('ag_matches', JSON.stringify(matches)); }
+function saveTacticsData() { localStorage.setItem('ag_tactics', JSON.stringify(tactics)); }
+function saveCuotas() { localStorage.setItem('ag_cuotas', JSON.stringify(cuotas)); }
+
+
+// ============================================================
+// CONDICION REGLAMENTARIA (calculada automáticamente)
+// ============================================================
+function getCondicion(p) {
+  // Ficha médica vencida => no habilitado
+  if (p.ficha === 'vencida') return 'inhabilitado';
+  // Sin fichar Y sin carnet => condicional
+  if (!p.fichado && !p.tieneCarnet) return 'condicional';
+  // Ficha médica pendiente => condicional
+  if (p.ficha === 'pendiente') return 'condicional';
+  // Todo OK
+  return 'habilitado';
+}
+
+// Recalcular condicion en todos los jugadores al iniciar
+players = players.map(p => ({...p, condicion: getCondicion(p)}));
+savePlayers();
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+const pageTitles = {
+  dashboard:'Dashboard', plantel:'Plantel de Jugadores', administracion:'Administración',
+  fixture:'Fixture y Resultados', tacticas:'Tácticas y Formaciones',
+  estadisticas:'Estadísticas', talles:'Talles de Indumentaria', liga:'Liga Universitaria'
+};
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  document.getElementById('pageTitle').textContent = pageTitles[page];
+  document.querySelectorAll('.nav-item').forEach(n=>{
+    if(n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+page+"'")) n.classList.add('active');
+  });
+  if(page==='dashboard') renderDashboard();
+  if(page==='plantel') renderPlantel();
+  if(page==='administracion') renderAdmin();
+  if(page==='fixture') renderFixture();
+  if(page==='tacticas') renderTacticas();
+  if(page==='estadisticas') renderEstadisticas();
+  if(page==='talles') renderTalles();
+  if(page==='liga') initLiga();
+}
+
+// ============================================================
+// DASHBOARD
+// ============================================================
+function renderDashboard() {
+  const fichados = players.filter(p=>p.condicion==='habilitado').length;
+  const fichasOk = players.filter(p=>p.ficha==='ok').length;
+  const played = matches.filter(m=>m.jugado);
+  const wins = played.filter(m=>m.golesA>m.golesR).length;
+  const draws = played.filter(m=>m.golesA===m.golesR).length;
+  const losses = played.filter(m=>m.golesA<m.golesR).length;
+
+  document.getElementById('dash-total').textContent = players.length;
+  document.getElementById('dash-fichados').textContent = fichados;
+  document.getElementById('dash-fichas').textContent = fichasOk;
+  document.getElementById('dash-partidos').textContent = played.length;
+  document.getElementById('dash-wins').textContent = wins;
+  document.getElementById('dash-draws').textContent = draws;
+  document.getElementById('dash-losses').textContent = losses;
+
+  // Alertas
+  const alertas = [];
+  players.filter(p=>p.condicion==='inhabilitado').forEach(p=>{
+    let razon = p.ficha==='vencida' ? ('Ficha médica vencida (' + (p.vtoApto||'s/d') + ')') : 'Sin fichar / Sin carnet';
+    alertas.push('<div style="padding:8px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px">🔴 <strong>' + p.nombre + '</strong> — ' + razon + '</span><span class="badge badge-danger">No habilitado</span></div>');
+  });
+  players.filter(p=>p.condicion==='condicional').forEach(p=>alertas.push('<div style="padding:8px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px">⚠️ <strong>' + p.nombre + '</strong> — Ficha médica / carnet pendiente</span><span class="badge badge-warn">Condicional</span></div>'));
+  document.getElementById('dash-alertas').innerHTML = alertas.length ? alertas.join('') : '<div style="color:var(--text2);font-size:14px;padding:16px 0;text-align:center">✅ Sin alertas urgentes</div>';
+
+  // Próximos
+  const prox = matches.filter(m=>!m.jugado).sort((a,b)=>a.fecha>b.fecha?1:-1).slice(0,3);
+  document.getElementById('dash-proximos').innerHTML = prox.length ? prox.map(m=>{
+    const d = new Date(m.fecha+'T00:00:00');
+    return `<div style="padding:8px 0;border-bottom:1px solid var(--border)"><div style="font-weight:600;font-size:14px">vs. ${m.rival}</div><div style="font-size:12px;color:var(--text2)">${d.toLocaleDateString('es-UY')} ${m.hora||''} · ${m.lugar||'Sin sede'}</div></div>`;
+  }).join('') : '<div style="color:var(--text2);font-size:14px;padding:16px 0;text-align:center">No hay partidos programados</div>';
+
+  // Por posición
+  const pos = {Arquero:0,Defensor:0,Mediocampista:0,Delantero:0};
+  players.forEach(p=>{ if(pos[p.posicion]!==undefined) pos[p.posicion]++; });
+  document.getElementById('dash-posiciones').innerHTML = Object.entries(pos).map(([k,v])=>`
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)">
+      <span style="font-size:14px">${k}</span>
+      <span style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700">${v}</span>
+    </div>`).join('');
+}
+
+// ============================================================
+// PLANTEL
+// ============================================================
+function renderPlantel() { filterPlantel(); }
+
+function filterPlantel() {
+  const search = (document.getElementById('searchPlantel')?.value||'').toLowerCase();
+  const pos = document.getElementById('filterPos')?.value||'';
+  const nivel = document.getElementById('filterNivel')?.value||'';
+  const filtered = players.filter(p=>{
+    const ms = !search||p.nombre.toLowerCase().includes(search)||(p.apodo||'').toLowerCase().includes(search)||(p.puestoReal||'').toLowerCase().includes(search);
+    const mp = !pos||p.posicion===pos;
+    const mn = !nivel||p.nivel===nivel;
+    return ms&&mp&&mn;
+  }).sort((a,b)=>(a.numero||99)-(b.numero||99));
+
+  document.getElementById('plantel-grid').innerHTML = filtered.map(p=>{
+    const initials = p.nombre.split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase();
+    const nivelClass = p.nivel==='Bueno'?'nivel-bueno':p.nivel==='Regular'?'nivel-regular':'nivel-malo';
+    return `<div class="player-card" onclick="viewPlayer(${p.id})">
+      <div class="player-avatar">${initials}</div>
+      <div style="flex:1;min-width:0">
+        <div class="player-num">#${p.numero||'?'} · <span class="${nivelClass}">${p.nivel||''}</span></div>
+        <div class="player-name-big" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.nombre}</div>
+        <div class="player-pos">${p.puestoReal||p.posicion}</div>
+        <div class="player-badges">
+          ${p.ficha==='ok'?'<span class="badge badge-ok">Ficha ✓</span>':`<span class="badge badge-${p.ficha==='vencida'?'danger':'warn'}">Ficha ${p.ficha}</span>`}
+          ${p.fichado||p.tieneCarnet?'<span class="badge badge-blue">Fichado</span>':'<span class="badge badge-warn">Sin ficha</span>'}
+        </div>
+      </div>
+    </div>`;
+  }).join('')||'<div style="color:var(--text2);text-align:center;padding:40px;grid-column:1/-1">No hay jugadores</div>';
+}
+
+function viewPlayer(id) {
+  const p = players.find(x=>x.id===id); if(!p) return;
+  const initials = p.nombre.split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase();
+  const nivelColors = {Bueno:'var(--success)',Regular:'var(--warning)','A mejorar':'var(--danger)'};
+  document.getElementById('player-view-content').innerHTML = `
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px">
+      <div style="width:58px;height:58px;background:linear-gradient(135deg,var(--azul),var(--grana));border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;flex-shrink:0">${initials}</div>
+      <div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;line-height:1.1">${p.nombre}</div>
+        <div style="color:var(--text2);font-size:13px;margin-top:2px">${p.puestoReal||p.posicion} · #${p.numero||'?'} · <span style="color:${nivelColors[p.nivel]||'var(--text2)'}">${p.nivel||''}</span></div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:13px">
+      <div><div style="color:var(--text2);font-size:11px;margin-bottom:2px">🪪 Cédula</div><strong>${p.dni||'—'}</strong></div>
+      <div><div style="color:var(--text2);font-size:11px;margin-bottom:2px">🎂 Edad</div><strong>${p.edad||'—'} años</strong></div>
+      <div><div style="color:var(--text2);font-size:11px;margin-bottom:2px">📞 Teléfono</div><strong>${p.telefono||'—'}</strong></div>
+      <div><div style="color:var(--text2);font-size:11px;margin-bottom:2px">🏟️ Club</div><strong>${p.club||'—'}</strong></div>
+      <div><div style="color:var(--text2);font-size:11px;margin-bottom:2px">🆔 Carnet N°</div><strong>${p.carnet||'—'}</strong></div>
+      <div><div style="color:var(--text2);font-size:11px;margin-bottom:2px">📋 Fichado</div><strong>${p.fichado?'✅ Sí':'❌ No'} ${p.vtoApto?'· Vto: '+p.vtoApto:''}</strong></div>
+      <div><div style="color:var(--text2);font-size:11px;margin-bottom:2px">🏥 Ficha Médica</div><strong>${p.ficha}</strong></div>
+      <div><div style="color:var(--text2);font-size:11px;margin-bottom:2px">💪 Compromiso</div><strong>${p.compromiso||'—'}</strong></div>
+      <div><div style="color:var(--text2);font-size:11px;margin-bottom:2px">👕 Camiseta</div><strong>${p.talleCamiseta||'—'}</strong></div>
+      <div><div style="color:var(--text2);font-size:11px;margin-bottom:2px">🩳 Short</div><strong>${p.talleShort||'—'}</strong></div>
+    </div>
+    ${p.lesiones?`<div style="margin-top:14px;padding:10px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-radius:8px;font-size:13px"><div style="color:var(--text2);font-size:11px;margin-bottom:4px">🩹 Lesiones / Observaciones</div>${p.lesiones}</div>`:''}
+  `;
+  document.getElementById('view-edit-btn').onclick = ()=>{ closeModal('modal-player-view'); openEditPlayer(id); };
+  document.getElementById('view-delete-btn').onclick = ()=>deletePlayer(id);
+  openModal('modal-player-view');
+}
+
+function openAddPlayer() {
+  document.getElementById('modal-player-title').textContent = 'Agregar Jugador';
+  document.getElementById('edit-player-id').value = '';
+  ['p-nombre','p-apodo','p-telefono','p-email','p-dni','p-lesiones','p-carnet','p-club','p-puesto','p-vto-ficha'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('p-numero').value='';
+  document.getElementById('p-edad').value='';
+  document.getElementById('p-posicion').value='Arquero';
+  document.getElementById('p-ficha').value='pendiente';
+  document.getElementById('p-condicion').value='habilitado';
+  document.getElementById('p-tiene-carnet').value='no';
+  document.getElementById('p-fichado').value='';
+  document.getElementById('p-nivel').value='Regular';
+  document.getElementById('p-compromiso').value='2-Medio';
+  openModal('modal-player');
+}
+
+function openEditPlayer(id) {
+  const p = players.find(x=>x.id===id); if(!p) return;
+  document.getElementById('modal-player-title').textContent = 'Editar Jugador';
+  document.getElementById('edit-player-id').value = id;
+  document.getElementById('p-nombre').value = p.nombre;
+  document.getElementById('p-apodo').value = p.apodo||'';
+  document.getElementById('p-numero').value = p.numero||'';
+  document.getElementById('p-posicion').value = p.posicion;
+  document.getElementById('p-puesto').value = p.puestoReal||'';
+  document.getElementById('p-telefono').value = p.telefono||'';
+  document.getElementById('p-email').value = p.email||'';
+  document.getElementById('p-dni').value = p.dni||'';
+  document.getElementById('p-edad').value = p.edad||'';
+  document.getElementById('p-carnet').value = p.carnet||'';
+  document.getElementById('p-tiene-carnet').value = p.tieneCarnet?'si':'no';
+  document.getElementById('p-fichado').value = p.fichado?'ok':'';
+  document.getElementById('p-vto-ficha').value = p.vtoApto||'';
+  document.getElementById('p-condicion').value = p.condicion||'habilitado';
+  document.getElementById('p-club').value = p.club||'';
+  document.getElementById('p-ficha').value = p.ficha||'pendiente';
+  document.getElementById('p-nivel').value = p.nivel||'Regular';
+  document.getElementById('p-compromiso').value = p.compromiso||'2-Medio';
+  document.getElementById('p-lesiones').value = p.lesiones||'';
+  const tc = document.getElementById('p-talle-cam');
+  if([...tc.options].some(o=>o.value===p.talleCamiseta)) tc.value=p.talleCamiseta;
+  const ts = document.getElementById('p-talle-short');
+  if([...ts.options].some(o=>o.value===p.talleShort)) ts.value=p.talleShort;
+  openModal('modal-player');
+}
+
+function savePlayer() {
+  const nombre = document.getElementById('p-nombre').value.trim();
+  if(!nombre){alert('El nombre es obligatorio');return;}
+  const editId = document.getElementById('edit-player-id').value;
+  const data = {
+    nombre, apodo:document.getElementById('p-apodo').value,
+    numero:parseInt(document.getElementById('p-numero').value)||null,
+    posicion:document.getElementById('p-posicion').value,
+    puestoReal:document.getElementById('p-puesto').value,
+    telefono:document.getElementById('p-telefono').value,
+    email:document.getElementById('p-email').value,
+    dni:document.getElementById('p-dni').value,
+    edad:parseInt(document.getElementById('p-edad').value)||0,
+    carnet:document.getElementById('p-carnet').value,
+    tieneCarnet:document.getElementById('p-tiene-carnet').value==='si',
+    fichado:document.getElementById('p-fichado').value==='ok',
+    vtoApto:document.getElementById('p-vto-ficha').value,
+    condicion:document.getElementById('p-condicion').value,
+    club:document.getElementById('p-club').value,
+    ficha:document.getElementById('p-ficha').value,
+    nivel:document.getElementById('p-nivel').value,
+    compromiso:document.getElementById('p-compromiso').value,
+    talleCamiseta:document.getElementById('p-talle-cam').value,
+    talleShort:document.getElementById('p-talle-short').value,
+    lesiones:document.getElementById('p-lesiones').value,
+  };
+  // Recalcular condición automáticamente
+  data.condicion = getCondicion(data);
+  if(editId){
+    const idx=players.findIndex(p=>p.id==editId);
+    if(idx>=0) players[idx]={...players[idx],...data};
+    showNotif('Jugador actualizado');
+  } else {
+    data.id=Date.now(); players.push(data);
+    showNotif('Jugador agregado');
+  }
+  savePlayers(); closeModal('modal-player');
+  renderPlantel(); renderDashboard();
+}
+
+function deletePlayer(id) {
+  if(!confirm('¿Eliminar este jugador?')) return;
+  players=players.filter(p=>p.id!==id);
+  savePlayers(); closeModal('modal-player-view');
+  renderPlantel(); renderDashboard();
+  showNotif('Jugador eliminado');
+}
+
+// ============================================================
+// ADMINISTRACION
+// ============================================================
+const MESES_SHOW = ['feb','mar','abr','may','jun'];
+const MESES_LABEL = ['Feb','Mar','Abr','May','Jun'];
+
+function renderAdmin() { renderCarnet(); renderCuotas(); renderMedico(); renderReglamento(); }
+
+function switchAdminTab(tab, el) {
+  ['carnet','cuotas','medico','reglamento'].forEach(t=>{
+    document.getElementById('admin-'+t).style.display=t===tab?'block':'none';
+  });
+  document.querySelectorAll('.tabs .tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function renderCarnet() {
+  document.getElementById('carnet-tbody').innerHTML = players.sort((a,b)=>a.nombre>b.nombre?1:-1).map(p=>`
+    <tr>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px">${p.numero||'?'}</td>
+      <td><strong>${p.nombre}</strong></td>
+      <td>${p.dni||'—'}</td>
+      <td>${p.carnet||'—'}</td>
+      <td><span class="badge ${p.tieneCarnet?'badge-ok':'badge-warn'}">${p.tieneCarnet?'✅ Sí':'❌ No'}</span></td>
+      <td><span class="badge ${p.fichado?'badge-ok':'badge-warn'}">${p.fichado?'✅ OK':'⏳ Pend.'}</span></td>
+      <td style="font-size:12px">${p.vtoApto||'—'}</td>
+      <td style="font-size:12px;color:var(--text2)">${p.club||'—'}</td>
+    </tr>`).join('');
+}
+
+function renderCuotas() {
+  const sorted = [...players].sort((a,b)=>a.nombre>b.nombre?1:-1);
+  let alDia=0, pend=0;
+  sorted.forEach(p=>{ if(MESES_SHOW.every(m=>(cuotas[p.id]||{})[m])) alDia++; else pend++; });
+  document.getElementById('cuotas-al-dia-count').textContent=alDia+' al día';
+  document.getElementById('cuotas-pendientes-count').textContent=pend+' pendientes';
+  document.getElementById('cuotas-tbody').innerHTML = sorted.map(p=>{
+    const cq=cuotas[p.id]||{};
+    const cols=MESES_SHOW.map((m,i)=>`<td><button class="btn btn-sm ${cq[m]?'btn-success':'btn-outline'}" onclick="toggleCuota(${p.id},'${m}')">${cq[m]?'✅':'⬜'} ${MESES_LABEL[i]}</button></td>`).join('');
+    const ok=MESES_SHOW.every(m=>cq[m]);
+    return `<tr><td><strong>${p.nombre}</strong></td><td>#${p.numero||'?'}</td>${cols}<td><span class="badge ${ok?'badge-ok':'badge-warn'}">${ok?'Al día':'Pend.'}</span></td></tr>`;
+  }).join('');
+}
+
+function toggleCuota(id, mes) {
+  if(!cuotas[id]) cuotas[id]={};
+  cuotas[id][mes]=!cuotas[id][mes];
+  saveCuotas(); renderCuotas(); renderDashboard();
+}
+
+function renderMedico() {
+  document.getElementById('medico-tbody').innerHTML = [...players].sort((a,b)=>a.nombre>b.nombre?1:-1).map(p=>`
+    <tr>
+      <td><strong>${p.nombre}</strong></td>
+      <td>${p.edad||'—'}</td>
+      <td><span class="badge ${p.ficha==='ok'?'badge-ok':p.ficha==='pendiente'?'badge-warn':'badge-danger'}">${p.ficha}</span></td>
+      <td style="font-size:12px">${p.vtoApto||'—'}</td>
+      <td><span class="badge ${p.ficha==='ok'?'badge-ok':p.ficha==='pendiente'?'badge-warn':'badge-danger'}">${p.ficha==='ok'?'Apto':'No apto'}</span></td>
+      <td style="font-size:12px;color:var(--text2)">${p.lesiones||'Ninguna'}</td>
+    </tr>`).join('');
+}
+
+function renderReglamento() {
+  const nivelBadge = n=>n==='Bueno'?'badge-ok':n==='Regular'?'badge-warn':'badge-danger';
+  document.getElementById('reglamento-tbody').innerHTML = [...players].sort((a,b)=>a.nombre>b.nombre?1:-1).map(p=>`
+    <tr>
+      <td><strong>${p.nombre}</strong></td>
+      <td>${p.puestoReal||p.posicion}</td>
+      <td><span class="badge ${nivelBadge(p.nivel)}">${p.nivel||'—'}</span></td>
+      <td style="font-size:12px">${p.compromiso||'—'}</td>
+      <td><span class="badge ${p.condicion==='habilitado'?'badge-ok':p.condicion==='condicional'?'badge-warn':'badge-danger'}">${p.condicion}</span></td>
+      <td><button class="btn btn-outline btn-sm" onclick="openEditPlayer(${p.id})">✏️</button></td>
+    </tr>`).join('');
+}
+
+// ============================================================
+// FIXTURE
+// ============================================================
+function renderFixture() { renderFixtureList(); }
+function switchFixtureTab(tab, el) {
+  document.getElementById('fixture-calendario').style.display=tab==='calendario'?'block':'none';
+  document.getElementById('fixture-resultados').style.display=tab==='resultados'?'block':'none';
+  document.querySelectorAll('#page-fixture .tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+}
+function renderFixtureList() {
+  const up=matches.filter(m=>!m.jugado).sort((a,b)=>a.fecha>b.fecha?1:-1);
+  const pl=matches.filter(m=>m.jugado).sort((a,b)=>b.fecha>a.fecha?1:-1);
+  document.getElementById('fixture-list').innerHTML=up.length?up.map(matchCard).join(''):'<div style="color:var(--text2);text-align:center;padding:40px">No hay partidos programados</div>';
+  document.getElementById('resultados-list').innerHTML=pl.length?pl.map(matchCard).join(''):'<div style="color:var(--text2);text-align:center;padding:40px">Sin resultados aún</div>';
+}
+function matchCard(m) {
+  const d=new Date(m.fecha+'T00:00:00');
+  const months=['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'];
+  const rb=m.jugado?(m.golesA>m.golesR?'badge-ok':m.golesA===m.golesR?'badge-warn':'badge-danger'):'badge-blue';
+  const rl=m.jugado?(m.golesA>m.golesR?'Victoria':m.golesA===m.golesR?'Empate':'Derrota'):(m.condicion==='local'?'🏠 Local':'✈️ Visitante');
+  return `<div class="fixture-match">
+    <div class="fixture-date"><div class="day">${d.getDate()}</div><div class="month">${months[d.getMonth()]}</div></div>
+    <div class="fixture-sep"></div>
+    <div class="fixture-info">
+      <div class="fixture-teams">+40 Azulgrana vs. ${m.rival}</div>
+      <div class="fixture-meta">${m.hora||''} ${m.lugar?'· '+m.lugar:''} ${m.torneo?'· '+m.torneo:''}</div>
+      ${m.jugado&&m.notas?`<div style="font-size:12px;color:var(--text2);margin-top:3px">${m.notas}</div>`:''}
+    </div>
+    ${m.jugado?`<div class="fixture-score">${m.golesA} - ${m.golesR}</div>`:''}
+    <div style="text-align:right">
+      <span class="badge ${rb}">${rl}</span><br>
+      <button class="btn btn-outline btn-sm" style="margin-top:6px" onclick="openEditMatch(${m.id})">✏️</button>
+    </div>
+  </div>`;
+}
+function openAddMatch() {
+  document.getElementById('edit-match-id').value='';
+  ['m-rival','m-hora','m-lugar','m-torneo','m-notas'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('m-fecha').value='';
+  document.getElementById('m-jugado').checked=false;
+  document.getElementById('m-goles-a').value=0;
+  document.getElementById('m-goles-r').value=0;
+  document.getElementById('m-amarillas').value=0;
+  document.getElementById('m-rojas').value=0;
+  document.getElementById('resultado-section').style.display='none';
+  openModal('modal-match');
+}
+function openEditMatch(id) {
+  const m=matches.find(x=>x.id===id); if(!m) return;
+  document.getElementById('edit-match-id').value=id;
+  document.getElementById('m-rival').value=m.rival;
+  document.getElementById('m-fecha').value=m.fecha;
+  document.getElementById('m-hora').value=m.hora||'';
+  document.getElementById('m-lugar').value=m.lugar||'';
+  document.getElementById('m-torneo').value=m.torneo||'';
+  document.getElementById('m-condicion').value=m.condicion||'local';
+  document.getElementById('m-jugado').checked=!!m.jugado;
+  document.getElementById('m-goles-a').value=m.golesA||0;
+  document.getElementById('m-goles-r').value=m.golesR||0;
+  document.getElementById('m-amarillas').value=m.amarillas||0;
+  document.getElementById('m-rojas').value=m.rojas||0;
+  document.getElementById('m-notas').value=m.notas||'';
+  document.getElementById('resultado-section').style.display=m.jugado?'block':'none';
+  openModal('modal-match');
+}
+function toggleResultado() {
+  document.getElementById('resultado-section').style.display=document.getElementById('m-jugado').checked?'block':'none';
+}
+function saveMatch() {
+  const rival=document.getElementById('m-rival').value.trim();
+  if(!rival){alert('El rival es obligatorio');return;}
+  const editId=document.getElementById('edit-match-id').value;
+  const jugado=document.getElementById('m-jugado').checked;
+  const data={rival,fecha:document.getElementById('m-fecha').value,hora:document.getElementById('m-hora').value,
+    lugar:document.getElementById('m-lugar').value,torneo:document.getElementById('m-torneo').value,
+    condicion:document.getElementById('m-condicion').value,jugado,
+    golesA:jugado?parseInt(document.getElementById('m-goles-a').value)||0:null,
+    golesR:jugado?parseInt(document.getElementById('m-goles-r').value)||0:null,
+    amarillas:parseInt(document.getElementById('m-amarillas').value)||0,
+    rojas:parseInt(document.getElementById('m-rojas').value)||0,
+    notas:document.getElementById('m-notas').value};
+  if(editId){const idx=matches.findIndex(m=>m.id==editId);if(idx>=0)matches[idx]={...matches[idx],...data};showNotif('Partido actualizado');}
+  else{data.id=Date.now();matches.push(data);showNotif('Partido guardado');}
+  saveMatches(); closeModal('modal-match'); renderFixture(); renderDashboard();
+}
+
+// ============================================================
+// TACTICAS
+// ============================================================
+const formations={
+  '4-4-2':{GK:[{x:50,y:91}],DEF:[{x:15,y:72},{x:37,y:72},{x:63,y:72},{x:85,y:72}],MID:[{x:15,y:50},{x:37,y:50},{x:63,y:50},{x:85,y:50}],FWD:[{x:35,y:24},{x:65,y:24}]},
+  '4-3-3':{GK:[{x:50,y:91}],DEF:[{x:15,y:72},{x:37,y:72},{x:63,y:72},{x:85,y:72}],MID:[{x:25,y:52},{x:50,y:50},{x:75,y:52}],FWD:[{x:20,y:24},{x:50,y:20},{x:80,y:24}]},
+  '3-5-2':{GK:[{x:50,y:91}],DEF:[{x:25,y:74},{x:50,y:74},{x:75,y:74}],MID:[{x:10,y:54},{x:28,y:50},{x:50,y:50},{x:72,y:50},{x:90,y:54}],FWD:[{x:35,y:24},{x:65,y:24}]},
+  '5-3-2':{GK:[{x:50,y:91}],DEF:[{x:10,y:74},{x:28,y:72},{x:50,y:72},{x:72,y:72},{x:90,y:74}],MID:[{x:25,y:52},{x:50,y:50},{x:75,y:52}],FWD:[{x:35,y:24},{x:65,y:24}]},
+  '4-5-1':{GK:[{x:50,y:91}],DEF:[{x:15,y:74},{x:37,y:74},{x:63,y:74},{x:85,y:74}],MID:[{x:10,y:52},{x:28,y:50},{x:50,y:50},{x:72,y:50},{x:90,y:52}],FWD:[{x:50,y:22}]}
+};
+const posMap={GK:'Arquero',DEF:'Defensor',MID:'Mediocampista',FWD:'Delantero'};
+const posColors={GK:'#f59e0b',DEF:'#3b82f6',MID:'#22c55e',FWD:'#ef4444'};
+
+function renderTacticas() {
+  if(tactics.formation) document.getElementById('formation-select').value=tactics.formation;
+  if(tactics.notes) document.getElementById('tactical-notes').value=tactics.notes;
+  updateFormation();
+}
+function updateFormation() {
+  const f=document.getElementById('formation-select').value;
+  const layout=formations[f];
+  const slots=[];let total=0;
+  for(const [pos,positions] of Object.entries(layout)){
+    positions.forEach((_,i)=>{
+      const opts='<option value="">— Elegir jugador —</option>'+
+        players.sort((a,b)=>a.nombre>b.nombre?1:-1).map(p=>`<option value="${p.id}">${p.nombre} (#${p.numero||'?'}) · ${p.puestoReal||p.posicion}</option>`).join('');
+      slots.push(`<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <span class="badge" style="background:${posColors[pos]}22;color:${posColors[pos]};min-width:38px;text-align:center">${pos}</span>
+        <select class="form-select" style="flex:1" id="lineup-slot-${total}" onchange="updateField()">${opts}</select>
+      </div>`);
+      total++;
+    });
+  }
+  document.getElementById('lineup-slots').innerHTML=slots.join('');
+  if(tactics.lineup){
+    tactics.lineup.forEach((pid,i)=>{
+      const el=document.getElementById('lineup-slot-'+i);
+      if(el&&pid) el.value=pid;
+    });
+  }
+  updateField();
+}
+function updateField() {
+  const f=document.getElementById('formation-select').value;
+  const layout=formations[f];
+  const container=document.getElementById('field-players');
+  container.innerHTML='';
+  let idx=0;
+  for(const [pos,positions] of Object.entries(layout)){
+    positions.forEach(coords=>{
+      const el=document.getElementById('lineup-slot-'+idx);
+      const pid=el?el.value:'';
+      const player=pid?players.find(p=>p.id==pid):null;
+      const dot=document.createElement('div');
+      dot.className='player-dot';
+      dot.style.left=coords.x+'%';
+      dot.style.top=coords.y+'%';
+      const label=player?(player.apodo||player.nombre.split(' ')[0]):pos;
+      dot.innerHTML=`<div class="dot" style="background:${posColors[pos]}">${player?'#'+(player.numero||'?'):pos}</div><div class="dot-name">${label}</div>`;
+      container.appendChild(dot);
+      idx++;
+    });
+  }
+}
+function saveTactics() {
+  const f=document.getElementById('formation-select').value;
+  const lineup=[];let i=0;
+  while(document.getElementById('lineup-slot-'+i)){lineup.push(document.getElementById('lineup-slot-'+i).value);i++;}
+  tactics={formation:f,notes:document.getElementById('tactical-notes').value,lineup};
+  saveTacticsData();showNotif('Tácticas guardadas');
+}
+
+// ============================================================
+// ESTADISTICAS
+// ============================================================
+function renderEstadisticas() {
+  const played=matches.filter(m=>m.jugado);
+  const wins=played.filter(m=>m.golesA>m.golesR).length;
+  const draws=played.filter(m=>m.golesA===m.golesR).length;
+  const losses=played.filter(m=>m.golesA<m.golesR).length;
+  const gf=played.reduce((s,m)=>s+(m.golesA||0),0);
+  const gc=played.reduce((s,m)=>s+(m.golesR||0),0);
+  const pts=wins*3+draws;
+  const am=played.reduce((s,m)=>s+(m.amarillas||0),0);
+  const ro=played.reduce((s,m)=>s+(m.rojas||0),0);
+  document.getElementById('stat-goles').textContent=gf;
+  document.getElementById('stat-gc').textContent=gc;
+  document.getElementById('stat-pts').textContent=pts;
+  const row=(l,v,c='var(--text)')=>`<div style="padding:10px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between"><span style="color:var(--text2)">${l}</span><strong style="color:${c}">${v}</strong></div>`;
+  document.getElementById('stats-partidos').innerHTML=
+    row('Partidos jugados',played.length)+row('Ganados',wins,'var(--success)')+row('Empates',draws,'var(--warning)')+
+    row('Perdidos',losses,'var(--danger)')+row('Goles a favor',gf)+row('Goles en contra',gc)+
+    `<div style="padding:10px 0;display:flex;justify-content:space-between"><span style="color:var(--text2)">Diferencia</span><strong style="color:${gf-gc>=0?'var(--success)':'var(--danger)'}">${gf-gc>=0?'+':''}${gf-gc}</strong></div>`;
+  document.getElementById('stats-disciplina').innerHTML=
+    row('Tarjetas amarillas',am,'var(--warning)')+row('Tarjetas rojas',ro,'var(--danger)')+row('Puntos totales',pts);
+}
+
+// ============================================================
+// TALLES
+// ============================================================
+function renderTalles() {
+  const sorted=[...players].sort((a,b)=>(a.numero||99)-(b.numero||99));
+  document.getElementById('talles-tbody').innerHTML=sorted.map(p=>`
+    <tr>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px">${p.numero||'?'}</td>
+      <td><strong>${p.nombre}</strong></td>
+      <td style="color:var(--text2)">${p.puestoReal||p.posicion}</td>
+      <td><span class="badge badge-blue">${p.talleCamiseta||'—'}</span></td>
+      <td><span class="badge badge-purple">${p.talleShort||'—'}</span></td>
+    </tr>`).join('');
+  // Resumen
+  const countTalles = (field) => {
+    const counts={};
+    players.forEach(p=>{ const t=p[field]||'N/D'; counts[t]=(counts[t]||0)+1; });
+    return counts;
+  };
+  const renderResumen = (counts) => Object.entries(counts).sort((a,b)=>['M','L','XL','XXL','XXXL'].indexOf(a[0])-['M','L','XL','XXL','XXXL'].indexOf(b[0])).map(([t,n])=>`
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)">
+      <span style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700">${t}</span>
+      <span style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900">${n}</span>
+    </div>`).join('');
+  document.getElementById('resumen-camiseta').innerHTML=renderResumen(countTalles('talleCamiseta'));
+  document.getElementById('resumen-short').innerHTML=renderResumen(countTalles('talleShort'));
+}
+
+// ============================================================
+// UTILS
+// ============================================================
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+document.querySelectorAll('.modal-overlay').forEach(m=>{m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');});});
+function showNotif(text){const n=document.getElementById('notification');document.getElementById('notif-text').textContent=text;n.classList.add('show');setTimeout(()=>n.classList.remove('show'),3000);}
+
+document.getElementById('topbarDate').textContent=new Date().toLocaleDateString('es-UY',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+renderDashboard();
+
+// ============================================================
+// LIGA UNIVERSITARIA
+// ============================================================
+let currentLigaUrl = 'https://ligauniversitaria.org.uy/estadisticas-futbol-mas-40-c/';
+
+function initLiga() {
+  // Check if iframe loads or is blocked
+  const iframe = document.getElementById('liga-iframe');
+  const blockedMsg = document.getElementById('liga-blocked-msg');
+  const iframeWrap = document.getElementById('liga-iframe-wrap');
+  
+  iframe.onerror = function() {
+    iframeWrap.style.display = 'none';
+    blockedMsg.style.display = 'block';
+  };
+  
+  // Timeout fallback: if iframe doesn't load in 5s, show the fallback
+  iframe._loadTimer = setTimeout(function() {
+    try {
+      // Try to access iframe content - if blocked, this throws
+      const doc = iframe.contentDocument || iframe.contentWindow.document;
+      if (!doc || !doc.body || doc.body.innerHTML === '') {
+        iframeWrap.style.display = 'none';
+        blockedMsg.style.display = 'block';
+      }
+    } catch(e) {
+      iframeWrap.style.display = 'none';
+      blockedMsg.style.display = 'block';
+    }
+  }, 6000);
+
+  iframe.onload = function() {
+    clearTimeout(iframe._loadTimer);
+    try {
+      const doc = iframe.contentDocument || iframe.contentWindow.document;
+      if (!doc || doc.location.href === 'about:blank') throw new Error('blocked');
+      iframeWrap.style.display = 'block';
+      blockedMsg.style.display = 'none';
+    } catch(e) {
+      iframeWrap.style.display = 'none';
+      blockedMsg.style.display = 'block';
+    }
+  };
+}
+
+function setLigaUrl(url) {
+  currentLigaUrl = url;
+  document.getElementById('liga-iframe').src = url;
+  document.getElementById('liga-url-display').textContent = url.replace('https://','');
+  document.getElementById('liga-external-link').href = url;
+  document.getElementById('liga-blocked-link').href = url;
+  document.getElementById('liga-iframe-wrap').style.display = 'block';
+  document.getElementById('liga-blocked-msg').style.display = 'none';
+}
+
+function reloadLigaFrame() {
+  const iframe = document.getElementById('liga-iframe');
+  iframe.src = iframe.src;
+  document.getElementById('liga-iframe-wrap').style.display = 'block';
+  document.getElementById('liga-blocked-msg').style.display = 'none';
+}
+
+</script>
+
+</body></html>
