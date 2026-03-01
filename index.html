@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- saved from url=(0043)file:///C:/Users/mhahn/Downloads/index.html -->
+<!-- saved from url=(0045)file:///C:/Users/mhahn/Downloads/index_7.html -->
 <html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>+40 Azulgrana — Club Manager</title>
-<link href="./+40 Azulgrana — Club Manager_files/css2" rel="stylesheet">
+<link href="./index_files/css2" rel="stylesheet">
 <style>
   :root {
     --azul: #003087;
@@ -111,7 +111,7 @@
 
   .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 200; align-items: center; justify-content: center; }
   .modal-overlay.open { display: flex; }
-  .modal { background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; padding: 26px; width: 90%; max-width: 620px; max-height: 92vh; overflow-y: auto; }
+  .modal { background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; padding: 26px; width: 95%; max-width: 780px; max-height: 95vh; overflow-y: auto; }
   .modal-title { font-family: 'Barlow Condensed',sans-serif; font-size: 22px; font-weight: 800; margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
   .modal-footer { display: flex; gap: 10px; justify-content: flex-end; margin-top: 18px; border-top: 1px solid var(--border); padding-top: 18px; }
 
@@ -183,14 +183,17 @@
   </div>
   <nav>
     <div class="nav-section">Principal</div>
-    <div class="nav-item active" onclick="showPage(&#39;dashboard&#39;)"><span class="icon">🏠</span><span>Dashboard</span></div>
+    <div class="nav-item" onclick="showPage(&#39;dashboard&#39;)"><span class="icon">🏠</span><span>Dashboard</span></div>
     <div class="nav-section">Equipo</div>
     <div class="nav-item" onclick="showPage(&#39;plantel&#39;)"><span class="icon">👥</span><span>Plantel</span></div>
     <div class="nav-item" onclick="showPage(&#39;administracion&#39;)"><span class="icon">📋</span><span>Administración</span></div>
     <div class="nav-section">Competencia</div>
-    <div class="nav-item" onclick="showPage(&#39;fixture&#39;)"><span class="icon">📅</span><span>Fixture</span></div>
+    <div class="nav-item active" onclick="showPage(&#39;fixture&#39;)"><span class="icon">📅</span><span>Fixture</span></div>
     <div class="nav-item" onclick="showPage(&#39;tacticas&#39;)"><span class="icon">⚽</span><span>Tácticas</span></div>
     <div class="nav-item" onclick="showPage(&#39;estadisticas&#39;)"><span class="icon">📊</span><span>Estadísticas</span></div>
+    <div class="nav-item" onclick="showPage(&#39;jugstats&#39;)"><span class="icon">👤</span><span>Stats Jugadores</span></div>
+    <div class="nav-item" onclick="showPage(&#39;stats_jugadores&#39;)"><span class="icon">⭐</span><span>Stats Jugadores</span></div>
+    <div class="nav-item" onclick="showPage(&#39;statsJugadores&#39;)"><span class="icon">🎯</span><span>Stats Jugadores</span></div>
     <div class="nav-item" onclick="showPage(&#39;talles&#39;)"><span class="icon">👕</span><span>Talles</span></div>
     <div class="nav-section">Liga</div>
     <div class="nav-item" onclick="showPage(&#39;liga&#39;)"><span class="icon">🏆</span><span>Liga Universitaria</span></div>
@@ -205,15 +208,15 @@
 
 <main class="main">
   <div class="topbar">
-    <div class="page-title" id="pageTitle">Dashboard</div>
+    <div class="page-title" id="pageTitle">Fixture y Resultados</div>
     <div style="display:flex;align-items:center;gap:14px">
-      <span id="topbarDate" style="font-size:13px;color:var(--text2)">sábado, 28 de febrero de 2026</span>
+      <span id="topbarDate" style="font-size:13px;color:var(--text2)">domingo, 1 de marzo de 2026</span>
     </div>
   </div>
   <div class="content">
 
     <!-- DASHBOARD -->
-    <div class="page active" id="page-dashboard">
+    <div class="page" id="page-dashboard">
       <div class="stats-grid">
         <div class="stat-card blue"><div class="stat-icon">👥</div><div class="stat-num" id="dash-total">42</div><div class="stat-label">Jugadores en Plantel</div></div>
         <div class="stat-card red"><div class="stat-icon">🆔</div><div class="stat-num" id="dash-fichados">30</div><div class="stat-label">Jugadores Habilitados</div></div>
@@ -335,16 +338,17 @@
     </div>
 
     <!-- FIXTURE -->
-    <div class="page" id="page-fixture">
+    <div class="page active" id="page-fixture">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:12px">
         <div class="tabs" style="margin:0">
           <div class="tab active" onclick="switchFixtureTab(&#39;calendario&#39;,this)">📅 Próximos</div>
           <div class="tab" onclick="switchFixtureTab(&#39;resultados&#39;,this)">🏆 Resultados</div>
         </div>
-        <button class="btn btn-primary" onclick="openAddMatch()">＋ Cargar Partido</button>
+        <button class="btn btn-outline" onclick="openImportMatch()">📋 Importar desde Liga</button>
+        <button class="btn btn-primary" onclick="openAddMatch()">＋ Cargar Manual</button>
       </div>
-      <div id="fixture-calendario"><div id="fixture-list"></div></div>
-      <div id="fixture-resultados" style="display:none"><div id="resultados-list"></div></div>
+      <div id="fixture-calendario"><div id="fixture-list"><div style="color:var(--text2);text-align:center;padding:40px">No hay partidos programados</div></div></div>
+      <div id="fixture-resultados" style="display:none"><div id="resultados-list"><div style="color:var(--text2);text-align:center;padding:40px">Sin resultados aún</div></div></div>
     </div>
 
     <!-- TACTICAS -->
@@ -432,6 +436,230 @@
     </div>
 
 
+
+    <!-- STATS JUGADORES -->
+    <div class="page" id="page-statsJugadores">
+      <div class="tabs">
+        <div class="tab active" onclick="switchStatsTab(&#39;ranking&#39;,this)">🏆 Ranking</div>
+        <div class="tab" onclick="switchStatsTab(&#39;individual&#39;,this)">👤 Por Jugador</div>
+        <div class="tab" onclick="switchStatsTab(&#39;porpartido&#39;,this)">📅 Por Partido</div>
+      </div>
+
+      <!-- RANKING -->
+      <div id="stats-ranking">
+        <div class="grid-3" style="margin-bottom:18px">
+          <div class="card">
+            <div class="card-header"><div class="card-title">⚽ Goleadores</div></div>
+            <div id="ranking-goles"></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">🟨 Disciplina</div></div>
+            <div id="ranking-disciplina"></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">📊 Presencia</div></div>
+            <div id="ranking-presencia"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">📋 Tabla Completa</div></div>
+          <div style="overflow-x:auto">
+            <table class="table">
+              <thead><tr><th>#</th><th>Jugador</th><th>Puesto</th><th>PJ</th><th>MIN</th><th>⚽</th><th>🟨</th><th>🟥</th><th>% Asist.</th></tr></thead>
+              <tbody id="ranking-tabla"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- INDIVIDUAL -->
+      <div id="stats-individual" style="display:none">
+        <div style="margin-bottom:16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+          <select class="form-select" style="width:280px" id="stats-player-select" onchange="renderStatsIndividual()">
+            <option value="">— Seleccioná un jugador —</option>
+          </select>
+        </div>
+        <div id="stats-individual-content">
+          <div style="color:var(--text2);text-align:center;padding:40px">Seleccioná un jugador para ver sus estadísticas</div>
+        </div>
+      </div>
+
+      <!-- POR PARTIDO -->
+      <div id="stats-porpartido" style="display:none">
+        <div style="margin-bottom:16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between">
+          <select class="form-select" style="width:320px" id="stats-match-select" onchange="renderStatsPorPartido()">
+            <option value="">— Seleccioná un partido —</option>
+          </select>
+          <button class="btn btn-primary" onclick="openMatchStatsModal()">✏️ Cargar Stats de Partido</button>
+        </div>
+        <div id="stats-partido-content">
+          <div style="color:var(--text2);text-align:center;padding:40px">Seleccioná un partido para ver o cargar estadísticas</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATS JUGADORES -->
+    <div class="page" id="page-stats_jugadores">
+      <div class="tabs">
+        <div class="tab active" onclick="switchStatsTab(&#39;ranking&#39;,this)">🏆 Ranking</div>
+        <div class="tab" onclick="switchStatsTab(&#39;individual&#39;,this)">👤 Por Jugador</div>
+        <div class="tab" onclick="switchStatsTab(&#39;asistencia&#39;,this)">📅 Asistencia</div>
+      </div>
+
+      <!-- RANKING -->
+      <div id="stats-ranking">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">🏆 Ranking del Equipo</div>
+            <div style="font-size:12px;color:var(--text2)" id="ranking-partidos-count"></div>
+          </div>
+          <div style="overflow-x:auto">
+            <table class="table">
+              <thead><tr><th>#</th><th>Jugador</th><th>PJ</th><th>Min</th><th>⚽ Goles</th><th>🟨 Am.</th><th>🟥 Ro.</th><th>% Asist.</th></tr></thead>
+              <tbody id="ranking-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- INDIVIDUAL -->
+      <div id="stats-individual" style="display:none">
+        <div style="margin-bottom:16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+          <select class="form-select" style="width:260px" id="stats-player-select" onchange="renderPlayerDetail()">
+            <option value="">— Elegí un jugador —</option>
+          </select>
+        </div>
+        <div id="player-detail-content">
+          <div style="color:var(--text2);text-align:center;padding:40px">Seleccioná un jugador para ver sus estadísticas</div>
+        </div>
+      </div>
+
+      <!-- ASISTENCIA -->
+      <div id="stats-asistencia" style="display:none">
+        <div class="card" style="overflow-x:auto">
+          <table class="table" id="asistencia-table">
+            <thead><tr id="asistencia-header"><th>Jugador</th></tr></thead>
+            <tbody id="asistencia-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- STATS JUGADORES -->
+    <div class="page" id="page-jugstats">
+      <div class="tabs" style="margin-bottom:18px">
+        <div class="tab active" onclick="switchJugStatsTab(&#39;ranking&#39;,this)">🏆 Ranking</div>
+        <div class="tab" onclick="switchJugStatsTab(&#39;ficha&#39;,this)">👤 Por Jugador</div>
+        <div class="tab" onclick="switchJugStatsTab(&#39;cargamanual&#39;,this)">✏️ Carga Manual</div>
+      </div>
+
+      <!-- RANKING -->
+      <div id="jugstats-ranking">
+        <div class="stats-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:20px">
+          <div class="stat-card blue"><div class="stat-icon">⚽</div><div class="stat-num" id="js-total-goles">0</div><div class="stat-label">Goles del Equipo</div></div>
+          <div class="stat-card red"><div class="stat-icon">🟨</div><div class="stat-num" id="js-total-am">0</div><div class="stat-label">Amarillas</div></div>
+          <div class="stat-card gold"><div class="stat-icon">🟥</div><div class="stat-num" id="js-total-ro">0</div><div class="stat-label">Rojas</div></div>
+          <div class="stat-card green"><div class="stat-icon">👟</div><div class="stat-num" id="js-total-min">0</div><div class="stat-label">Minutos Totales</div></div>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header"><div class="card-title">⚽ Goleadores</div></div>
+            <div id="ranking-goles"></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">📅 % Asistencia a Partidos</div></div>
+            <div id="ranking-asistencia"></div>
+          </div>
+        </div>
+        <div class="grid-2" style="margin-top:18px">
+          <div class="card">
+            <div class="card-header"><div class="card-title">🟨 Disciplina (Amarillas)</div></div>
+            <div id="ranking-amarillas"></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">⏱️ Minutos Jugados</div></div>
+            <div id="ranking-minutos"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- POR JUGADOR -->
+      <div id="jugstats-ficha" style="display:none">
+        <div style="margin-bottom:16px">
+          <select class="form-select" style="max-width:300px" id="jugstats-select-player" onchange="renderFichaJugador()">
+            <option value="">— Seleccioná un jugador —</option>
+          </select>
+        </div>
+        <div id="ficha-jugador-stats"></div>
+      </div>
+
+      <!-- CARGA MANUAL -->
+      <div id="jugstats-cargamanual" style="display:none">
+        <div class="card">
+          <div class="card-header"><div class="card-title">✏️ Cargar Stats Individuales</div></div>
+          <div class="form-row" style="margin-bottom:14px">
+            <div class="form-group">
+              <label class="form-label">Jugador</label>
+              <select class="form-select" id="manual-player">
+                <option value="">— Seleccioná —</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Partido</label>
+              <select class="form-select" id="manual-match">
+                <option value="">— Seleccioná —</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">¿Jugó?</label>
+              <select class="form-select" id="manual-jugo">
+                <option value="1">✅ Sí jugó</option>
+                <option value="0">❌ No jugó</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Minutos jugados</label>
+              <input class="form-input" id="manual-minutos" type="number" min="0" max="90" value="90">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Goles</label>
+              <input class="form-input" id="manual-goles" type="number" min="0" value="0">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Asistencias</label>
+              <input class="form-input" id="manual-asistencias" type="number" min="0" value="0">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Amarillas</label>
+              <input class="form-input" id="manual-amarillas" type="number" min="0" max="2" value="0">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Rojas</label>
+              <input class="form-input" id="manual-rojas" type="number" min="0" max="1" value="0">
+            </div>
+          </div>
+          <button class="btn btn-primary" onclick="saveManualStat()">💾 Guardar</button>
+        </div>
+
+        <div class="card" style="margin-top:18px">
+          <div class="card-header"><div class="card-title">📋 Stats Cargadas</div></div>
+          <div style="overflow-x:auto">
+            <table class="table" id="manual-stats-table">
+              <thead><tr><th>Jugador</th><th>Partido</th><th>Jugó</th><th>Min</th><th>⚽</th><th>🅰️</th><th>🟨</th><th>🟥</th><th></th></tr></thead>
+              <tbody id="manual-stats-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- LIGA UNIVERSITARIA -->
     <div class="page" id="page-liga">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:12px">
@@ -456,7 +684,7 @@
           <button class="btn btn-sm btn-outline" style="padding:3px 10px;font-size:11px;flex-shrink:0" onclick="reloadLigaFrame()">🔄 Recargar</button>
         </div>
         <div id="liga-iframe-wrap" style="position:relative">
-          <iframe id="liga-iframe" src="./+40 Azulgrana — Club Manager_files/saved_resource.html" style="width:100%;height:calc(100vh - 265px);min-height:580px;border:none;display:block;background:white" title="Liga Universitaria de Deportes"></iframe>
+          <iframe id="liga-iframe" src="./index_files/saved_resource.html" style="width:100%;height:calc(100vh - 265px);min-height:580px;border:none;display:block;background:white" title="Liga Universitaria de Deportes"></iframe>
         </div>
         <div id="liga-blocked-msg" style="display:none;padding:60px 20px;text-align:center">
           <div style="font-size:52px;margin-bottom:16px">🔒</div>
@@ -472,6 +700,35 @@
 
   </div>
 </main>
+
+
+<!-- MODAL Importar Partido desde Liga -->
+<div class="modal-overlay open" id="modal-import">
+  <div class="modal" style="max-width:680px">
+    <div class="modal-title">📋 Importar Partido desde Liga</div>
+    <div style="font-size:13px;color:var(--text2);margin-bottom:14px">
+      Copiá el texto del partido desde la web de la Liga Universitaria y pegalo acá. 
+      La app va a detectar automáticamente el resultado, titulares, goles, cambios y amonestados.
+    </div>
+    <div class="form-group">
+      <label class="form-label">Texto del partido (copiá y pegá)</label>
+      <textarea class="form-textarea" id="import-text" style="min-height:200px;font-family:monospace;font-size:12px" placeholder="OBC AZULGRANA (1)
+CLUB RICHARD ANDERSON UNIV. (1)
+Fecha: 2025-10-25...
+
+Pegá acá el texto completo del partido"></textarea>
+    </div>
+    <div id="import-preview" style="display: block;">
+      <div class="section-divider">Vista previa — verificá antes de importar</div>
+      <div id="import-preview-content"><div style="background:var(--bg3);border-radius:10px;padding:16px;margin-bottom:14px"><div style="font-family:&#39;Barlow Condensed&#39;,sans-serif;font-size:22px;font-weight:800">POCO SITIO PLAYA VERDE 0 — 2 OBC AZULGRANA</div><div style="font-size:13px;color:var(--text2)">2025-11-08 · COMPLEJO LAS CASUARINAS</div><div style="margin-top:8px"><span class="badge badge-ok">🟢 Victoria</span><span style="margin-left:8px;font-size:13px;color:var(--text2)">✈️ Visitante</span></div></div><div class="grid-2" style="gap:14px"><div><div class="section-divider">Titulares (verde=en plantel)</div><div style="line-height:2"><span class="badge badge-ok" style="margin:2px">Andres Chanhazaroff</span></div></div><div><div class="section-divider">Goles</div><div style="font-size:13px;color:var(--text2)">Sin goles</div><div class="section-divider" style="margin-top:10px">Amarillas</div><div style="font-size:13px;color:var(--text2)">Ninguno</div><div class="section-divider" style="margin-top:10px">Cambios (8)</div><div style="font-size:12px;color:var(--text2)">45' ↑MARCOS EUGENIO SAIZ ↓FELIPE JUAN MUXI</div><div style="font-size:12px;color:var(--text2)">45' ↑NICOLAS MONTERO ↓MATIAS WALTER FALCON</div><div style="font-size:12px;color:var(--text2)">45' ↑MARTIN SANTIAGO BEYHAUT ↓LUTCHER PATRICK BROWN</div><div style="font-size:12px;color:var(--text2)">60' ↑CARLOS MARTIN DE LEON ↓NICOLAS JOSE D ANGELO</div><div style="font-size:12px;color:var(--text2)">63' ↑JUAN LUIS MASTROIANNI ↓MILTON FERNANDO HAHN</div><div style="font-size:12px;color:var(--text2)">60' ↑LUTCHER PATRICK BROWN ↓SANTIAGO CARDOSO</div><div style="font-size:12px;color:var(--text2)">78' ↑FELIPE JUAN MUXI ↓SANTIAGO IGANCIO CURIEL</div><div style="font-size:12px;color:var(--text2)">83' ↑NICOLAS JOSE D ANGELO ↓GUILLERMO BOULLOSA</div></div></div></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal(&#39;modal-import&#39;)">Cancelar</button>
+      <button class="btn btn-outline" onclick="parseImportText()">🔍 Analizar</button>
+      <button class="btn btn-primary" id="btn-confirm-import" style="display: inline-flex;" onclick="confirmImport()">✅ Importar Partido</button>
+    </div>
+  </div>
+</div>
 
 <!-- MODAL Jugador -->
 <div class="modal-overlay" id="modal-player">
@@ -613,6 +870,9 @@
         <div class="form-group"><label class="form-label">Rojas</label><input class="form-input" id="m-rojas" type="number" min="0" value="0"></div>
       </div>
       <div class="form-group"><label class="form-label">Notas del Partido</label><textarea class="form-textarea" id="m-notas" placeholder="Observaciones, destacados..."></textarea></div>
+      <div class="section-divider" style="margin-top:16px">👥 Estadísticas por Jugador</div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:12px">Marcá quién jugó y cargá sus stats individuales</div>
+      <div id="match-player-stats" style="max-height:320px;overflow-y:auto"></div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-outline" onclick="closeModal(&#39;modal-match&#39;)">Cancelar</button>
@@ -643,11 +903,17 @@ let players = loadPlayers();
 let matches = JSON.parse(localStorage.getItem('ag_matches') || '[]');
 let tactics = JSON.parse(localStorage.getItem('ag_tactics') || '{}');
 let cuotas = JSON.parse(localStorage.getItem('ag_cuotas') || '{}');
+// playerStats: {matchId: {playerId: {played, minutes, goals, yellows, reds}}}
+let playerStats = JSON.parse(localStorage.getItem('ag_player_stats') || '{}');
+let matchStats = JSON.parse(localStorage.getItem('ag_match_stats') || '{}');
+// matchStats[matchId] = { players: [{playerId, jugó, minutos, goles, amarillas, rojas}] }
 
 function savePlayers() { localStorage.setItem('ag_players_v2', JSON.stringify(players)); }
 function saveMatches() { localStorage.setItem('ag_matches', JSON.stringify(matches)); }
 function saveTacticsData() { localStorage.setItem('ag_tactics', JSON.stringify(tactics)); }
 function saveCuotas() { localStorage.setItem('ag_cuotas', JSON.stringify(cuotas)); }
+function savePlayerStats() { localStorage.setItem('ag_player_stats', JSON.stringify(playerStats)); }
+function saveMatchStats() { localStorage.setItem('ag_match_stats', JSON.stringify(matchStats)); }
 
 
 // ============================================================
@@ -674,7 +940,7 @@ savePlayers();
 const pageTitles = {
   dashboard:'Dashboard', plantel:'Plantel de Jugadores', administracion:'Administración',
   fixture:'Fixture y Resultados', tacticas:'Tácticas y Formaciones',
-  estadisticas:'Estadísticas', talles:'Talles de Indumentaria', liga:'Liga Universitaria'
+  estadisticas:'Estadísticas', talles:'Talles de Indumentaria', liga:'Liga Universitaria', jugstats:'Estadísticas por Jugador', stats_jugadores:'Estadísticas por Jugador', statsJugadores:'Estadísticas por Jugador'
 };
 function showPage(page) {
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -691,7 +957,10 @@ function showPage(page) {
   if(page==='tacticas') renderTacticas();
   if(page==='estadisticas') renderEstadisticas();
   if(page==='talles') renderTalles();
+  if(page==='jugstats') renderJugStats();
   if(page==='liga') initLiga();
+  if(page==='stats_jugadores') renderStatsJugadores();
+  if(page==='statsJugadores') renderStatsJugadores();
 }
 
 // ============================================================
@@ -1019,6 +1288,7 @@ function openAddMatch() {
   document.getElementById('m-amarillas').value=0;
   document.getElementById('m-rojas').value=0;
   document.getElementById('resultado-section').style.display='none';
+  document.getElementById('match-player-stats').innerHTML='';
   openModal('modal-match');
 }
 function openEditMatch(id) {
@@ -1037,10 +1307,19 @@ function openEditMatch(id) {
   document.getElementById('m-rojas').value=m.rojas||0;
   document.getElementById('m-notas').value=m.notas||'';
   document.getElementById('resultado-section').style.display=m.jugado?'block':'none';
+  if(m.jugado) loadMatchPlayerStats(m.id);
+  else document.getElementById('match-player-stats').innerHTML='';
   openModal('modal-match');
 }
 function toggleResultado() {
-  document.getElementById('resultado-section').style.display=document.getElementById('m-jugado').checked?'block':'none';
+  const jugado = document.getElementById('m-jugado').checked;
+  document.getElementById('resultado-section').style.display=jugado?'block':'none';
+  if(jugado) {
+    const editId = document.getElementById('edit-match-id').value;
+    loadMatchPlayerStats(editId||'new_'+Date.now());
+  } else {
+    document.getElementById('match-player-stats').innerHTML='';
+  }
 }
 function saveMatch() {
   const rival=document.getElementById('m-rival').value.trim();
@@ -1057,6 +1336,11 @@ function saveMatch() {
     notas:document.getElementById('m-notas').value};
   if(editId){const idx=matches.findIndex(m=>m.id==editId);if(idx>=0)matches[idx]={...matches[idx],...data};showNotif('Partido actualizado');}
   else{data.id=Date.now();matches.push(data);showNotif('Partido guardado');}
+  // Guardar stats de jugadores si el partido fue jugado
+  if(jugado) {
+    const mid = editId || data.id;
+    collectMatchPlayerStats(mid);
+  }
   saveMatches(); closeModal('modal-match'); renderFixture(); renderDashboard();
 }
 
@@ -1196,6 +1480,592 @@ function showNotif(text){const n=document.getElementById('notification');documen
 document.getElementById('topbarDate').textContent=new Date().toLocaleDateString('es-UY',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
 renderDashboard();
 
+
+// ============================================================
+// ESTADISTICAS POR JUGADOR
+// ============================================================
+
+function getPlayerStats(playerId) {
+  // Suma todas las stats del jugador a través de todos los partidos
+  const stats = { pj: 0, minutos: 0, goles: 0, amarillas: 0, rojas: 0 };
+  const playedMatches = matches.filter(m => m.jugado);
+  playedMatches.forEach(m => {
+    const ms = matchStats[m.id];
+    if (!ms) return;
+    const ps = ms.find(s => s.playerId == playerId);
+    if (!ps || !ps.jugo) return;
+    stats.pj++;
+    stats.minutos += parseInt(ps.minutos) || 0;
+    stats.goles += parseInt(ps.goles) || 0;
+    stats.amarillas += parseInt(ps.amarillas) || 0;
+    stats.rojas += parseInt(ps.rojas) || 0;
+  });
+  const totalPartidos = playedMatches.length;
+  stats.pct = totalPartidos > 0 ? Math.round((stats.pj / totalPartidos) * 100) : 0;
+  return stats;
+}
+
+function switchStatsTab(tab, el) {
+  ['ranking','individual','porpartido'].forEach(t => {
+    document.getElementById('stats-' + t).style.display = t === tab ? 'block' : 'none';
+  });
+  document.querySelectorAll('#page-statsJugadores .tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  if (tab === 'individual') populatePlayerSelect();
+  if (tab === 'porpartido') populateMatchSelect();
+}
+
+function renderStatsJugadores() {
+  renderRanking();
+  populatePlayerSelect();
+  populateMatchSelect();
+}
+
+function renderRanking() {
+  const allStats = players.map(p => ({ player: p, stats: getPlayerStats(p.id) }));
+  const totalPartidos = matches.filter(m => m.jugado).length;
+
+  // Goleadores
+  const goleadores = [...allStats].filter(x => x.stats.goles > 0)
+    .sort((a, b) => b.stats.goles - a.stats.goles).slice(0, 8);
+  document.getElementById('ranking-goles').innerHTML = goleadores.length
+    ? goleadores.map((x, i) => `
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)">
+        <span style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:var(--text2);min-width:24px">${i+1}</span>
+        <span style="flex:1;font-size:13px;font-weight:600">${x.player.nombre}</span>
+        <span style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;color:var(--gold)">${x.stats.goles}</span>
+      </div>`).join('')
+    : '<div style="color:var(--text2);font-size:13px;padding:16px 0;text-align:center">Sin goles registrados</div>';
+
+  // Disciplina (amarillas + rojas)
+  const disciplina = [...allStats].filter(x => x.stats.amarillas + x.stats.rojas > 0)
+    .sort((a, b) => (b.stats.amarillas + b.stats.rojas) - (a.stats.amarillas + a.stats.rojas)).slice(0, 8);
+  document.getElementById('ranking-disciplina').innerHTML = disciplina.length
+    ? disciplina.map((x, i) => `
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)">
+        <span style="font-size:13px;font-weight:600;flex:1">${x.player.nombre}</span>
+        ${x.stats.amarillas > 0 ? '<span class="badge badge-warn">🟨 ' + x.stats.amarillas + '</span>' : ''}
+        ${x.stats.rojas > 0 ? '<span class="badge badge-danger">🟥 ' + x.stats.rojas + '</span>' : ''}
+      </div>`).join('')
+    : '<div style="color:var(--text2);font-size:13px;padding:16px 0;text-align:center">Sin tarjetas registradas</div>';
+
+  // Presencia
+  const presencia = [...allStats].filter(x => x.stats.pj > 0)
+    .sort((a, b) => b.stats.pj - a.stats.pj).slice(0, 8);
+  document.getElementById('ranking-presencia').innerHTML = presencia.length
+    ? presencia.map((x, i) => `
+      <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border)">
+        <span style="flex:1;font-size:13px;font-weight:600">${x.player.nombre}</span>
+        <span style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900">${x.stats.pj}/${totalPartidos}</span>
+        <span class="badge ${x.stats.pct >= 80 ? 'badge-ok' : x.stats.pct >= 50 ? 'badge-warn' : 'badge-danger'}">${x.stats.pct}%</span>
+      </div>`).join('')
+    : '<div style="color:var(--text2);font-size:13px;padding:16px 0;text-align:center">Sin partidos registrados</div>';
+
+  // Tabla completa
+  const sorted = [...allStats].sort((a, b) => b.stats.pj - a.stats.pj);
+  document.getElementById('ranking-tabla').innerHTML = sorted.map(x => `
+    <tr>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px">${x.player.numero || '?'}</td>
+      <td><strong>${x.player.nombre}</strong></td>
+      <td style="color:var(--text2);font-size:12px">${x.player.puestoReal || x.player.posicion}</td>
+      <td style="text-align:center;font-weight:600">${x.stats.pj}</td>
+      <td style="text-align:center">${x.stats.minutos}</td>
+      <td style="text-align:center;font-weight:700;color:var(--gold)">${x.stats.goles || '—'}</td>
+      <td style="text-align:center"><span style="color:var(--warning)">${x.stats.amarillas || '—'}</span></td>
+      <td style="text-align:center"><span style="color:var(--danger)">${x.stats.rojas || '—'}</span></td>
+      <td style="text-align:center">
+        <span class="badge ${x.stats.pct >= 80 ? 'badge-ok' : x.stats.pct >= 50 ? 'badge-warn' : 'badge-danger'}">${x.stats.pct}%</span>
+      </td>
+    </tr>`).join('');
+}
+
+function populatePlayerSelect() {
+  const sel = document.getElementById('stats-player-select');
+  const sorted = [...players].sort((a, b) => a.nombre > b.nombre ? 1 : -1);
+  sel.innerHTML = '<option value="">— Seleccioná un jugador —</option>' +
+    sorted.map(p => '<option value="' + p.id + '">' + p.nombre + ' (#' + (p.numero||'?') + ')</option>').join('');
+}
+
+function populateMatchSelect() {
+  const sel = document.getElementById('stats-match-select');
+  const played = matches.filter(m => m.jugado).sort((a, b) => b.fecha > a.fecha ? 1 : -1);
+  sel.innerHTML = '<option value="">— Seleccioná un partido —</option>' +
+    played.map(m => {
+      const d = new Date(m.fecha + 'T00:00:00');
+      const hasStats = matchStats[m.id] && matchStats[m.id].length > 0;
+      return '<option value="' + m.id + '">' + d.toLocaleDateString('es-UY') + ' · vs ' + m.rival + ' (' + m.golesA + '-' + m.golesR + ')' + (hasStats ? ' ✅' : ' ⚪') + '</option>';
+    }).join('');
+}
+
+function renderStatsIndividual() {
+  const playerId = document.getElementById('stats-player-select').value;
+  if (!playerId) return;
+  const player = players.find(p => p.id == playerId);
+  const stats = getPlayerStats(playerId);
+  const totalPartidos = matches.filter(m => m.jugado).length;
+  const initials = player.nombre.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+
+  // Partidos jugados por este jugador
+  const playerMatches = matches.filter(m => {
+    if (!m.jugado) return false;
+    const ms = matchStats[m.id];
+    if (!ms) return false;
+    const ps = ms.find(s => s.playerId == playerId);
+    return ps && ps.jugo;
+  });
+
+  document.getElementById('stats-individual-content').innerHTML = `
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px">
+      <div style="width:56px;height:56px;background:linear-gradient(135deg,var(--azul),var(--grana));border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px">${initials}</div>
+      <div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900">${player.nombre}</div>
+        <div style="color:var(--text2);font-size:13px">#${player.numero||'?'} · ${player.puestoReal||player.posicion}</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px">
+      <div class="stat-card blue" style="padding:14px">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900">${stats.pj}</div>
+        <div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:1px">Partidos</div>
+        <div style="font-size:11px;color:var(--text2)">${stats.pct}% asist.</div>
+      </div>
+      <div class="stat-card gold" style="padding:14px">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900">${stats.goles}</div>
+        <div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:1px">Goles</div>
+      </div>
+      <div class="stat-card" style="padding:14px;--after-color:var(--warning)">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;color:var(--warning)">${stats.amarillas}</div>
+        <div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:1px">Amarillas</div>
+      </div>
+      <div class="stat-card" style="padding:14px">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;color:var(--danger)">${stats.rojas}</div>
+        <div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:1px">Rojas</div>
+      </div>
+    </div>
+    <div style="margin-bottom:16px">
+      <div style="font-size:12px;color:var(--text2);margin-bottom:6px">MINUTOS JUGADOS TOTALES</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900">${stats.minutos} <span style="font-size:16px;color:var(--text2)">min</span></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-title">Partidos Jugados</div></div>
+      ${playerMatches.length ? playerMatches.sort((a,b) => b.fecha > a.fecha ? 1 : -1).map(m => {
+        const ms = matchStats[m.id];
+        const ps = ms ? ms.find(s => s.playerId == playerId) : null;
+        const d = new Date(m.fecha + 'T00:00:00');
+        return '<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)">' +
+          '<div style="flex:1"><div style="font-size:13px;font-weight:600">vs. ' + m.rival + '</div><div style="font-size:11px;color:var(--text2)">' + d.toLocaleDateString('es-UY') + '</div></div>' +
+          '<div style="font-family:&quot;Barlow Condensed&quot;,sans-serif;font-size:18px;font-weight:700;color:var(--gold)">' + m.golesA + '-' + m.golesR + '</div>' +
+          (ps ? '<div style="display:flex;gap:6px;font-size:12px">' +
+            (ps.minutos ? '<span class="badge badge-blue">' + ps.minutos + 'min</span>' : '') +
+            (ps.goles > 0 ? '<span class="badge badge-ok">⚽ ' + ps.goles + '</span>' : '') +
+            (ps.amarillas > 0 ? '<span class="badge badge-warn">🟨</span>' : '') +
+            (ps.rojas > 0 ? '<span class="badge badge-danger">🟥</span>' : '') +
+          '</div>' : '') +
+        '</div>';
+      }).join('') : '<div style="color:var(--text2);font-size:13px;padding:16px 0;text-align:center">No hay partidos registrados para este jugador</div>'}
+    </div>
+  `;
+}
+
+function renderStatsPorPartido() {
+  const matchId = document.getElementById('stats-match-select').value;
+  if (!matchId) return;
+  const match = matches.find(m => m.id == matchId);
+  if (!match) return;
+  const ms = matchStats[matchId] || [];
+  const d = new Date(match.fecha + 'T00:00:00');
+
+  const result = match.golesA > match.golesR ? 'Victoria' : match.golesA === match.golesR ? 'Empate' : 'Derrota';
+  const resultBadge = match.golesA > match.golesR ? 'badge-ok' : match.golesA === match.golesR ? 'badge-warn' : 'badge-danger';
+
+  document.getElementById('stats-partido-content').innerHTML = `
+    <div class="card" style="margin-bottom:16px">
+      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+        <div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900">+40 Azulgrana vs. ${match.rival}</div>
+          <div style="font-size:13px;color:var(--text2)">${d.toLocaleDateString('es-UY')} · ${match.lugar||''}</div>
+        </div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;color:var(--gold)">${match.golesA} - ${match.golesR}</div>
+        <span class="badge ${resultBadge}">${result}</span>
+        <div style="flex:1"></div>
+        <button class="btn btn-primary btn-sm" onclick="openMatchStatsModal()">✏️ Editar Stats</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-title">Jugadores en este partido</div>
+        <span style="font-size:13px;color:var(--text2)">${ms.filter(s=>s.jugo).length} jugaron</span>
+      </div>
+      ${ms.length ? `<div style="overflow-x:auto"><table class="table">
+        <thead><tr><th>Jugador</th><th>Puesto</th><th style="text-align:center">Min</th><th style="text-align:center">⚽</th><th style="text-align:center">🟨</th><th style="text-align:center">🟥</th></tr></thead>
+        <tbody>${ms.filter(s=>s.jugo).map(s => {
+          const p = players.find(x => x.id == s.playerId);
+          if (!p) return '';
+          return '<tr><td><strong>' + p.nombre + '</strong></td><td style="font-size:12px;color:var(--text2)">' + (p.puestoReal||p.posicion) + '</td>' +
+            '<td style="text-align:center">' + (s.minutos||'—') + '</td>' +
+            '<td style="text-align:center;font-weight:700;color:var(--gold)">' + (s.goles > 0 ? s.goles : '—') + '</td>' +
+            '<td style="text-align:center">' + (s.amarillas > 0 ? '🟨' : '—') + '</td>' +
+            '<td style="text-align:center">' + (s.rojas > 0 ? '🟥' : '—') + '</td></tr>';
+        }).join('')}</tbody>
+      </table></div>` : '<div style="color:var(--text2);font-size:13px;padding:20px 0;text-align:center">Sin estadísticas cargadas. Hacé clic en "Editar Stats" para cargarlas.</div>'}
+    </div>
+  `;
+}
+
+function openMatchStatsModal() {
+  // Determinar partido: desde pestaña por partido o pedir selección
+  let matchId = document.getElementById('stats-match-select') ? document.getElementById('stats-match-select').value : '';
+  
+  const played = matches.filter(m => m.jugado);
+  if (!played.length) { alert('No hay partidos jugados registrados'); return; }
+
+  // Si no hay partido seleccionado, usar el primero
+  if (!matchId) matchId = played[0].id;
+
+  const match = matches.find(m => m.id == matchId);
+  if (!match) return;
+
+  document.getElementById('stats-match-id').value = matchId;
+  const d = new Date(match.fecha + 'T00:00:00');
+  document.getElementById('modal-match-stats-title').textContent = 'vs. ' + match.rival + ' (' + d.toLocaleDateString('es-UY') + ')';
+
+  const existing = matchStats[matchId] || [];
+  const sorted = [...players].sort((a, b) => (a.numero||99) - (b.numero||99));
+
+  document.getElementById('match-stats-tbody').innerHTML = sorted.map(p => {
+    const ex = existing.find(s => s.playerId == p.id) || {};
+    return '<tr>' +
+      '<td><strong>' + p.nombre + '</strong><br><span style="font-size:11px;color:var(--text2)">#' + (p.numero||'?') + ' · ' + (p.puestoReal||p.posicion) + '</span></td>' +
+      '<td style="text-align:center"><input type="checkbox" id="ms-jugo-' + p.id + '" ' + (ex.jugo ? 'checked' : '') + ' onchange="toggleMinutos(' + p.id + ')"></td>' +
+      '<td style="text-align:center"><input type="number" id="ms-min-' + p.id + '" min="0" max="120" value="' + (ex.minutos||90) + '" style="width:60px;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:4px 6px;color:var(--text);text-align:center" ' + (ex.jugo ? '' : 'disabled') + '></td>' +
+      '<td style="text-align:center"><input type="number" id="ms-gol-' + p.id + '" min="0" max="20" value="' + (ex.goles||0) + '" style="width:50px;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:4px 6px;color:var(--text);text-align:center"></td>' +
+      '<td style="text-align:center"><input type="number" id="ms-am-' + p.id + '" min="0" max="5" value="' + (ex.amarillas||0) + '" style="width:50px;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:4px 6px;color:var(--text);text-align:center"></td>' +
+      '<td style="text-align:center"><input type="number" id="ms-ro-' + p.id + '" min="0" max="2" value="' + (ex.rojas||0) + '" style="width:50px;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:4px 6px;color:var(--text);text-align:center"></td>' +
+      '</tr>';
+  }).join('');
+
+  openModal('modal-match-stats');
+}
+
+function toggleMinutos(playerId) {
+  const jugo = document.getElementById('ms-jugo-' + playerId).checked;
+  document.getElementById('ms-min-' + playerId).disabled = !jugo;
+}
+
+function saveMatchStatsModal() {
+  const matchId = document.getElementById('stats-match-id').value;
+  const stats = players.map(p => ({
+    playerId: p.id,
+    jugo: document.getElementById('ms-jugo-' + p.id) ? document.getElementById('ms-jugo-' + p.id).checked : false,
+    minutos: parseInt(document.getElementById('ms-min-' + p.id)?.value) || 0,
+    goles: parseInt(document.getElementById('ms-gol-' + p.id)?.value) || 0,
+    amarillas: parseInt(document.getElementById('ms-am-' + p.id)?.value) || 0,
+    rojas: parseInt(document.getElementById('ms-ro-' + p.id)?.value) || 0,
+  }));
+  matchStats[matchId] = stats;
+  saveMatchStats();
+  closeModal('modal-match-stats');
+  showNotif('Estadísticas guardadas');
+  renderRanking();
+  populateMatchSelect();
+  renderStatsPorPartido();
+}
+
+// ============================================================
+// STATS POR JUGADOR
+// ============================================================
+
+function renderStatsJugadores() {
+  // Populate player select
+  const sel = document.getElementById('stats-player-select');
+  const currentVal = sel.value;
+  sel.innerHTML = '<option value="">— Elegí un jugador —</option>' +
+    [...players].sort((a,b)=>a.nombre>b.nombre?1:-1).map(p=>
+      `<option value="${p.id}">${p.nombre} (#${p.numero||'?'})</option>`
+    ).join('');
+  if(currentVal) sel.value = currentVal;
+  renderRanking();
+  renderAsistencia();
+  if(document.getElementById('stats-player-select').value) renderPlayerDetail();
+}
+
+function switchStatsTab(tab, el) {
+  ['ranking','individual','asistencia'].forEach(t=>{
+    document.getElementById('stats-'+t).style.display = t===tab?'block':'none';
+  });
+  document.querySelectorAll('#page-stats_jugadores .tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  if(tab==='ranking') renderRanking();
+  if(tab==='asistencia') renderAsistencia();
+}
+
+function getPlayerTotals(playerId) {
+  let pj=0, mins=0, goles=0, amarillas=0, rojas=0;
+  const totalPartidos = matches.filter(m=>m.jugado).length;
+  matches.filter(m=>m.jugado).forEach(m=>{
+    const st = (playerStats[m.id]||{})[playerId];
+    if(st && st.played) {
+      pj++;
+      mins += parseInt(st.minutes)||0;
+      goles += parseInt(st.goals)||0;
+      amarillas += parseInt(st.yellows)||0;
+      rojas += parseInt(st.reds)||0;
+    }
+  });
+  const pct = totalPartidos > 0 ? Math.round((pj/totalPartidos)*100) : 0;
+  return {pj, mins, goles, amarillas, rojas, pct, totalPartidos};
+}
+
+function renderRanking() {
+  const played = matches.filter(m=>m.jugado);
+  document.getElementById('ranking-partidos-count').textContent = played.length + ' partido' + (played.length!==1?'s':'') + ' jugados';
+  
+  const rows = [...players].map(p=>{
+    const t = getPlayerTotals(p.id);
+    return {...t, player: p};
+  }).filter(r=>r.pj>0).sort((a,b)=>b.goles-a.goles||b.pj-a.pj);
+
+  if(!rows.length) {
+    document.getElementById('ranking-tbody').innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text2);padding:30px">Todavía no hay estadísticas cargadas.<br>Cargá un partido jugado y asigná los jugadores que participaron.</td></tr>';
+    return;
+  }
+
+  document.getElementById('ranking-tbody').innerHTML = rows.map((r,i)=>{
+    const pctColor = r.pct>=80?'var(--success)':r.pct>=50?'var(--warning)':'var(--danger)';
+    return `<tr>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:var(--text2)">${i+1}</td>
+      <td><strong>${r.player.nombre}</strong><div style="font-size:11px;color:var(--text2)">${r.player.puestoReal||r.player.posicion}</div></td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700">${r.pj}</td>
+      <td style="font-size:13px">${r.mins}'</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:var(--gold)">${r.goles}</td>
+      <td><span style="color:var(--warning);font-weight:700">${r.amarillas}</span></td>
+      <td><span style="color:var(--danger);font-weight:700">${r.rojas}</span></td>
+      <td><span style="color:${pctColor};font-weight:700">${r.pct}%</span></td>
+    </tr>`;
+  }).join('');
+}
+
+function renderPlayerDetail() {
+  const pid = document.getElementById('stats-player-select').value;
+  if(!pid) return;
+  const p = players.find(x=>x.id==pid);
+  if(!p) return;
+  const t = getPlayerTotals(p.id);
+  const initials = p.nombre.split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase();
+  const pctColor = t.pct>=80?'var(--success)':t.pct>=50?'var(--warning)':'var(--danger)';
+
+  const matchHistory = matches.filter(m=>m.jugado).sort((a,b)=>b.fecha>a.fecha?1:-1).map(m=>{
+    const st = (playerStats[m.id]||{})[p.id];
+    const d = new Date(m.fecha+'T00:00:00');
+    const played = st && st.played;
+    return `<tr>
+      <td style="font-size:12px">${d.toLocaleDateString('es-UY')}</td>
+      <td style="font-size:13px">vs. ${m.rival}</td>
+      <td><span class="badge ${played?'badge-ok':'badge-danger'}">${played?'✅ Jugó':'❌ No jugó'}</span></td>
+      <td>${played?(st.minutes||0)+"'":'-'}</td>
+      <td style="font-weight:700;color:var(--gold)">${played&&st.goals>0?st.goals:played?'0':'-'}</td>
+      <td style="color:var(--warning)">${played&&st.yellows>0?'🟨 '+st.yellows:'-'}</td>
+      <td style="color:var(--danger)">${played&&st.reds>0?'🟥 '+st.reds:'-'}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('player-detail-content').innerHTML = `
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px">
+      <div style="width:56px;height:56px;background:linear-gradient(135deg,var(--azul),var(--grana));border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;flex-shrink:0">${initials}</div>
+      <div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900">${p.nombre}</div>
+        <div style="color:var(--text2);font-size:13px">#${p.numero||'?'} · ${p.puestoReal||p.posicion}</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px">
+      <div class="stat-card blue" style="text-align:center;padding:14px">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900">${t.pj}</div>
+        <div style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:1px">Partidos</div>
+      </div>
+      <div class="stat-card gold" style="text-align:center;padding:14px">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;color:var(--gold)">${t.goles}</div>
+        <div style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:1px">Goles</div>
+      </div>
+      <div class="stat-card" style="text-align:center;padding:14px">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900">${t.mins}'</div>
+        <div style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:1px">Minutos</div>
+      </div>
+      <div class="stat-card" style="text-align:center;padding:14px">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;color:var(--warning)">${t.amarillas}</div>
+        <div style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:1px">Amarillas</div>
+      </div>
+      <div class="stat-card" style="text-align:center;padding:14px">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;color:${pctColor}">${t.pct}%</div>
+        <div style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:1px">Asistencia</div>
+      </div>
+    </div>
+    ${matchHistory ? `
+    <div class="card">
+      <div class="card-header"><div class="card-title">📋 Historial de Partidos</div></div>
+      <div style="overflow-x:auto">
+        <table class="table">
+          <thead><tr><th>Fecha</th><th>Partido</th><th>Participación</th><th>Min</th><th>⚽</th><th>🟨</th><th>🟥</th></tr></thead>
+          <tbody>${matchHistory}</tbody>
+        </table>
+      </div>
+    </div>` : '<div style="color:var(--text2);text-align:center;padding:20px">Sin partidos registrados aún</div>'}
+    <div class="card" style="margin-top:16px">
+      <div class="card-header"><div class="card-title">✏️ Editar Stats Manualmente</div></div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:12px">Seleccioná un partido para editar las estadísticas de este jugador</div>
+      <select class="form-select" style="max-width:300px;margin-bottom:12px" id="manual-match-select" onchange="loadManualStats(${p.id})">
+        <option value="">— Elegí un partido —</option>
+        ${matches.filter(m=>m.jugado).sort((a,b)=>b.fecha>a.fecha?1:-1).map(m=>{
+          const d = new Date(m.fecha+'T00:00:00');
+          return `<option value="${m.id}">${d.toLocaleDateString('es-UY')} vs. ${m.rival}</option>`;
+        }).join('')}
+      </select>
+      <div id="manual-stats-form" style="display:none">
+        <input type="hidden" id="manual-player-id" value="${p.id}">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap">
+          <label style="display:flex;align-items:center;gap:6px;font-size:14px;cursor:pointer">
+            <input type="checkbox" id="manual-played" onchange="toggleManualPlayed()"> ¿Jugó?
+          </label>
+        </div>
+        <div id="manual-stats-fields" style="display:none;display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+          <div class="form-group"><label class="form-label">Minutos</label><input class="form-input" id="manual-minutes" type="number" min="0" max="90" value="90"></div>
+          <div class="form-group"><label class="form-label">⚽ Goles</label><input class="form-input" id="manual-goals" type="number" min="0" value="0"></div>
+          <div class="form-group"><label class="form-label">🟨 Amarillas</label><input class="form-input" id="manual-yellows" type="number" min="0" value="0"></div>
+          <div class="form-group"><label class="form-label">🟥 Rojas</label><input class="form-input" id="manual-reds" type="number" min="0" value="0"></div>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="saveManualStats()">💾 Guardar stats</button>
+      </div>
+    </div>
+  `;
+}
+
+function loadManualStats(pid) {
+  const mid = document.getElementById('manual-match-select').value;
+  if(!mid) { document.getElementById('manual-stats-form').style.display='none'; return; }
+  document.getElementById('manual-stats-form').style.display='block';
+  const st = (playerStats[mid]||{})[pid] || {};
+  document.getElementById('manual-played').checked = !!st.played;
+  document.getElementById('manual-minutes').value = st.minutes||90;
+  document.getElementById('manual-goals').value = st.goals||0;
+  document.getElementById('manual-yellows').value = st.yellows||0;
+  document.getElementById('manual-reds').value = st.reds||0;
+  document.getElementById('manual-stats-fields').style.display = st.played ? 'grid' : 'none';
+}
+
+function toggleManualPlayed() {
+  const played = document.getElementById('manual-played').checked;
+  document.getElementById('manual-stats-fields').style.display = played ? 'grid' : 'none';
+}
+
+function saveManualStats() {
+  const pid = document.getElementById('manual-player-id').value;
+  const mid = document.getElementById('manual-match-select').value;
+  if(!mid) return;
+  if(!playerStats[mid]) playerStats[mid]={};
+  const played = document.getElementById('manual-played').checked;
+  playerStats[mid][pid] = {
+    played,
+    minutes: played ? parseInt(document.getElementById('manual-minutes').value)||0 : 0,
+    goals: played ? parseInt(document.getElementById('manual-goals').value)||0 : 0,
+    yellows: played ? parseInt(document.getElementById('manual-yellows').value)||0 : 0,
+    reds: played ? parseInt(document.getElementById('manual-reds').value)||0 : 0,
+  };
+  savePlayerStats();
+  showNotif('Stats guardadas');
+  renderPlayerDetail();
+  renderRanking();
+}
+
+function renderAsistencia() {
+  const playedMatches = matches.filter(m=>m.jugado).sort((a,b)=>a.fecha>b.fecha?1:-1);
+  if(!playedMatches.length) {
+    document.getElementById('asistencia-tbody').innerHTML = '<tr><td style="color:var(--text2);padding:20px">No hay partidos jugados aún</td></tr>';
+    return;
+  }
+  // Header con fechas
+  const months = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  const headerCols = playedMatches.map(m=>{
+    const d = new Date(m.fecha+'T00:00:00');
+    return `<th style="text-align:center;font-size:10px;min-width:50px">${d.getDate()}/${months[d.getMonth()]}<br><span style="font-weight:400;color:var(--text2)">${m.rival.substring(0,6)}</span></th>`;
+  }).join('');
+  document.getElementById('asistencia-header').innerHTML = `<th>Jugador</th>${headerCols}<th>PJ</th><th>%</th>`;
+
+  const sorted = [...players].sort((a,b)=>a.nombre>b.nombre?1:-1);
+  document.getElementById('asistencia-tbody').innerHTML = sorted.map(p=>{
+    const cols = playedMatches.map(m=>{
+      const st = (playerStats[m.id]||{})[p.id];
+      const played = st && st.played;
+      return `<td style="text-align:center">${played ? '✅' : '—'}</td>`;
+    }).join('');
+    const t = getPlayerTotals(p.id);
+    const pctColor = t.pct>=80?'var(--success)':t.pct>=50?'var(--warning)':'var(--danger)';
+    return `<tr>
+      <td><strong style="font-size:13px">${p.nombre}</strong></td>
+      ${cols}
+      <td style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;text-align:center">${t.pj}</td>
+      <td style="font-weight:700;color:${pctColor};text-align:center">${t.pct}%</td>
+    </tr>`;
+  }).join('');
+}
+
+// Cargar stats en modal de partido
+function loadMatchPlayerStats(matchId) {
+  const container = document.getElementById('match-player-stats');
+  if(!container) return;
+  const sorted = [...players].sort((a,b)=>(a.numero||99)-(b.numero||99));
+  container.innerHTML = sorted.map(p=>{
+    const st = (playerStats[matchId]||{})[p.id] || {};
+    const initials = p.nombre.split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase();
+    return `<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);flex-wrap:wrap" id="pstat-row-${p.id}">
+      <div style="width:32px;height:32px;background:linear-gradient(135deg,var(--azul),var(--grana));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0">${initials}</div>
+      <div style="min-width:140px;flex:1">
+        <div style="font-size:13px;font-weight:600">${p.nombre}</div>
+        <div style="font-size:11px;color:var(--text2)">#${p.numero||'?'} · ${p.puestoReal||p.posicion}</div>
+      </div>
+      <label style="display:flex;align-items:center;gap:5px;font-size:13px;cursor:pointer;white-space:nowrap">
+        <input type="checkbox" id="ps-played-${p.id}" ${st.played?'checked':''} onchange="toggleMatchPlayerRow(${p.id})"> Jugó
+      </label>
+      <div id="ps-fields-${p.id}" style="display:${st.played?'flex':'none'};gap:8px;align-items:center;flex-wrap:wrap">
+        <div style="display:flex;align-items:center;gap:4px">
+          <span style="font-size:11px;color:var(--text2)">Min</span>
+          <input type="number" id="ps-min-${p.id}" value="${st.minutes||90}" min="0" max="90" style="width:52px;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:4px 6px;color:var(--text);font-size:13px">
+        </div>
+        <div style="display:flex;align-items:center;gap:4px">
+          <span style="font-size:13px">⚽</span>
+          <input type="number" id="ps-goals-${p.id}" value="${st.goals||0}" min="0" style="width:44px;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:4px 6px;color:var(--text);font-size:13px">
+        </div>
+        <div style="display:flex;align-items:center;gap:4px">
+          <span style="font-size:13px">🟨</span>
+          <input type="number" id="ps-y-${p.id}" value="${st.yellows||0}" min="0" style="width:44px;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:4px 6px;color:var(--text);font-size:13px">
+        </div>
+        <div style="display:flex;align-items:center;gap:4px">
+          <span style="font-size:13px">🟥</span>
+          <input type="number" id="ps-r-${p.id}" value="${st.reds||0}" min="0" style="width:44px;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:4px 6px;color:var(--text);font-size:13px">
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleMatchPlayerRow(pid) {
+  const played = document.getElementById('ps-played-'+pid).checked;
+  document.getElementById('ps-fields-'+pid).style.display = played ? 'flex' : 'none';
+}
+
+function collectMatchPlayerStats(matchId) {
+  if(!playerStats[matchId]) playerStats[matchId]={};
+  players.forEach(p=>{
+    const playedEl = document.getElementById('ps-played-'+p.id);
+    if(!playedEl) return;
+    const played = playedEl.checked;
+    playerStats[matchId][p.id] = {
+      played,
+      minutes: played ? parseInt(document.getElementById('ps-min-'+p.id)?.value)||0 : 0,
+      goals: played ? parseInt(document.getElementById('ps-goals-'+p.id)?.value)||0 : 0,
+      yellows: played ? parseInt(document.getElementById('ps-y-'+p.id)?.value)||0 : 0,
+      reds: played ? parseInt(document.getElementById('ps-r-'+p.id)?.value)||0 : 0,
+    };
+  });
+  savePlayerStats();
+}
+
 // ============================================================
 // LIGA UNIVERSITARIA
 // ============================================================
@@ -1256,6 +2126,634 @@ function reloadLigaFrame() {
   iframe.src = iframe.src;
   document.getElementById('liga-iframe-wrap').style.display = 'block';
   document.getElementById('liga-blocked-msg').style.display = 'none';
+}
+
+
+// ============================================================
+// PLAYER STATS
+// ============================================================
+// playerStats = { matchId_playerId: { jugo, minutos, goles, asistencias, amarillas, rojas } }
+// (playerStats ya declarado arriba)
+function savePlayerStats() { localStorage.setItem('ag_player_stats', JSON.stringify(playerStats)); }
+
+function getStatKey(matchId, playerId) { return matchId + '_' + playerId; }
+
+function getPlayerTotals(playerId) {
+  const totals = { partidos: 0, jugados: 0, minutos: 0, goles: 0, asistencias: 0, amarillas: 0, rojas: 0 };
+  matches.filter(m => m.jugado).forEach(m => {
+    const key = getStatKey(m.id, playerId);
+    if (playerStats[key]) {
+      totals.partidos++;
+      if (playerStats[key].jugo) {
+        totals.jugados++;
+        totals.minutos += parseInt(playerStats[key].minutos) || 0;
+        totals.goles += parseInt(playerStats[key].goles) || 0;
+        totals.asistencias += parseInt(playerStats[key].asistencias) || 0;
+        totals.amarillas += parseInt(playerStats[key].amarillas) || 0;
+        totals.rojas += parseInt(playerStats[key].rojas) || 0;
+      }
+    }
+  });
+  totals.pct = totals.partidos > 0 ? Math.round(totals.jugados / matches.filter(m=>m.jugado).length * 100) : 0;
+  return totals;
+}
+
+function switchJugStatsTab(tab, el) {
+  ['ranking','ficha','cargamanual'].forEach(t => {
+    document.getElementById('jugstats-' + t).style.display = t === tab ? 'block' : 'none';
+  });
+  document.querySelectorAll('#page-jugstats .tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  if (tab === 'ranking') renderJugStatsRanking();
+  if (tab === 'ficha') renderFichaSelects();
+  if (tab === 'cargamanual') renderManualTab();
+}
+
+function renderJugStats() {
+  renderJugStatsRanking();
+}
+
+function renderJugStatsRanking() {
+  const played = matches.filter(m => m.jugado);
+  // Totales equipo
+  let totalGoles = 0, totalAm = 0, totalRo = 0, totalMin = 0;
+  players.forEach(p => {
+    const t = getPlayerTotals(p.id);
+    totalGoles += t.goles; totalAm += t.amarillas; totalRo += t.rojas; totalMin += t.minutos;
+  });
+  document.getElementById('js-total-goles').textContent = totalGoles;
+  document.getElementById('js-total-am').textContent = totalAm;
+  document.getElementById('js-total-ro').textContent = totalRo;
+  document.getElementById('js-total-min').textContent = totalMin;
+
+  const sorted = players.map(p => ({ p, t: getPlayerTotals(p.id) }));
+
+  // Goleadores
+  const goleadores = [...sorted].filter(x => x.t.goles > 0).sort((a,b) => b.t.goles - a.t.goles).slice(0,10);
+  document.getElementById('ranking-goles').innerHTML = goleadores.length ? goleadores.map((x,i) => rankRow(i+1, x.p.nombre, x.p.numero, x.t.goles, '⚽')).join('') 
+    : '<div style="color:var(--text2);padding:16px;font-size:14px;text-align:center">Sin goles registrados aún</div>';
+
+  // Asistencia
+  const asistencia = [...sorted].filter(x => x.t.partidos > 0).sort((a,b) => b.t.pct - a.t.pct).slice(0,10);
+  document.getElementById('ranking-asistencia').innerHTML = asistencia.length ? asistencia.map((x,i) => rankRowPct(i+1, x.p.nombre, x.p.numero, x.t.jugados, played.length, x.t.pct)).join('')
+    : '<div style="color:var(--text2);padding:16px;font-size:14px;text-align:center">Sin datos de asistencia aún</div>';
+
+  // Amarillas
+  const amarillas = [...sorted].filter(x => x.t.amarillas > 0).sort((a,b) => b.t.amarillas - a.t.amarillas).slice(0,10);
+  document.getElementById('ranking-amarillas').innerHTML = amarillas.length ? amarillas.map((x,i) => rankRow(i+1, x.p.nombre, x.p.numero, x.t.amarillas, '🟨')).join('')
+    : '<div style="color:var(--text2);padding:16px;font-size:14px;text-align:center">Sin tarjetas registradas</div>';
+
+  // Minutos
+  const minutos = [...sorted].filter(x => x.t.minutos > 0).sort((a,b) => b.t.minutos - a.t.minutos).slice(0,10);
+  document.getElementById('ranking-minutos').innerHTML = minutos.length ? minutos.map((x,i) => rankRow(i+1, x.p.nombre, x.p.numero, x.t.minutos, '⏱️')).join('')
+    : '<div style="color:var(--text2);padding:16px;font-size:14px;text-align:center">Sin minutos registrados</div>';
+}
+
+function rankRow(pos, nombre, numero, valor, icon) {
+  const colors = ['var(--gold)','#9ca3af','#b45309'];
+  const color = pos <= 3 ? colors[pos-1] : 'var(--text2)';
+  return `<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)">
+    <span style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:${color};min-width:24px">${pos}</span>
+    <span style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;flex:1">${nombre} <span style="color:var(--text2);font-size:13px">#${numero||'?'}</span></span>
+    <span style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900">${valor} ${icon}</span>
+  </div>`;
+}
+
+function rankRowPct(pos, nombre, numero, jugados, total, pct) {
+  const colors = ['var(--gold)','#9ca3af','#b45309'];
+  const color = pos <= 3 ? colors[pos-1] : 'var(--text2)';
+  const barColor = pct >= 75 ? 'var(--success)' : pct >= 50 ? 'var(--warning)' : 'var(--danger)';
+  return `<div style="padding:10px 0;border-bottom:1px solid var(--border)">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:4px">
+      <span style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:${color};min-width:24px">${pos}</span>
+      <span style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;flex:1">${nombre} <span style="color:var(--text2);font-size:13px">#${numero||'?'}</span></span>
+      <span style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:${barColor}">${pct}%</span>
+      <span style="font-size:12px;color:var(--text2)">${jugados}/${total}</span>
+    </div>
+    <div style="margin-left:36px"><div class="progress"><div class="progress-bar" style="width:${pct}%;background:${barColor}"></div></div></div>
+  </div>`;
+}
+
+function renderFichaSelects() {
+  const sel = document.getElementById('jugstats-select-player');
+  sel.innerHTML = '<option value="">— Seleccioná un jugador —</option>' +
+    [...players].sort((a,b)=>a.nombre>b.nombre?1:-1).map(p => `<option value="${p.id}">${p.nombre} (#${p.numero||'?'})</option>`).join('');
+}
+
+function renderFichaJugador() {
+  const pid = document.getElementById('jugstats-select-player').value;
+  const container = document.getElementById('ficha-jugador-stats');
+  if (!pid) { container.innerHTML = ''; return; }
+  const p = players.find(x => x.id == pid);
+  if (!p) return;
+  const t = getPlayerTotals(p.id);
+  const played = matches.filter(m => m.jugado);
+
+  const initials = p.nombre.split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase();
+
+  let matchRows = played.map(m => {
+    const key = getStatKey(m.id, p.id);
+    const s = playerStats[key];
+    const d = new Date(m.fecha + 'T00:00:00');
+    return `<tr>
+      <td style="font-size:13px">${m.fecha ? d.toLocaleDateString('es-UY') : '—'}</td>
+      <td style="font-size:13px">vs. ${m.rival}</td>
+      <td>${s ? (s.jugo ? '<span class="badge badge-ok">✅ Jugó</span>' : '<span class="badge badge-danger">❌ No</span>') : '<span class="badge badge-warn">—</span>'}</td>
+      <td>${s && s.jugo ? s.minutos || 0 : '—'}</td>
+      <td>${s && s.jugo ? s.goles || 0 : '—'}</td>
+      <td>${s && s.jugo ? s.asistencias || 0 : '—'}</td>
+      <td>${s && s.jugo ? s.amarillas || 0 : '—'}</td>
+      <td>${s && s.jugo ? s.rojas || 0 : '—'}</td>
+    </tr>`;
+  }).join('');
+
+  container.innerHTML = `
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px">
+      <div style="width:56px;height:56px;background:linear-gradient(135deg,var(--azul),var(--grana));border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px">${initials}</div>
+      <div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900">${p.nombre}</div>
+        <div style="color:var(--text2)">#${p.numero||'?'} · ${p.puestoReal||p.posicion}</div>
+      </div>
+    </div>
+    <div class="stats-grid" style="grid-template-columns:repeat(5,1fr);margin-bottom:20px">
+      <div class="stat-card blue"><div class="stat-num">${t.jugados}</div><div class="stat-label">Partidos</div><div style="font-size:11px;color:var(--text2);margin-top:4px">${t.pct}% asistencia</div></div>
+      <div class="stat-card red"><div class="stat-num">${t.goles}</div><div class="stat-label">Goles</div></div>
+      <div class="stat-card gold"><div class="stat-num">${t.asistencias}</div><div class="stat-label">Asistencias</div></div>
+      <div class="stat-card green"><div class="stat-num">${t.minutos}</div><div class="stat-label">Minutos</div></div>
+      <div class="stat-card ${t.amarillas > 3 ? 'red' : 'gold'}"><div class="stat-num">${t.amarillas}🟨 ${t.rojas}🟥</div><div class="stat-label">Disciplina</div></div>
+    </div>
+    ${played.length > 0 ? `
+    <div class="card">
+      <div class="card-header"><div class="card-title">📋 Detalle por Partido</div></div>
+      <div style="overflow-x:auto">
+        <table class="table">
+          <thead><tr><th>Fecha</th><th>Partido</th><th>Jugó</th><th>Min</th><th>⚽</th><th>🅰️</th><th>🟨</th><th>🟥</th></tr></thead>
+          <tbody>${matchRows}</tbody>
+        </table>
+      </div>
+    </div>` : '<div style="color:var(--text2);text-align:center;padding:30px">No hay partidos jugados aún</div>'}
+  `;
+}
+
+function renderManualTab() {
+  // Llenar selects
+  const pSel = document.getElementById('manual-player');
+  pSel.innerHTML = '<option value="">— Seleccioná —</option>' +
+    [...players].sort((a,b)=>a.nombre>b.nombre?1:-1).map(p=>`<option value="${p.id}">${p.nombre} (#${p.numero||'?'})</option>`).join('');
+
+  const mSel = document.getElementById('manual-match');
+  const played = matches.filter(m=>m.jugado).sort((a,b)=>b.fecha>a.fecha?1:-1);
+  mSel.innerHTML = '<option value="">— Seleccioná —</option>' +
+    played.map(m=>`<option value="${m.id}">vs. ${m.rival} (${m.fecha||'s/f'})</option>`).join('');
+
+  renderManualStatsTable();
+}
+
+function saveManualStat() {
+  const pid = document.getElementById('manual-player').value;
+  const mid = document.getElementById('manual-match').value;
+  if (!pid || !mid) { alert('Seleccioná jugador y partido'); return; }
+  const key = getStatKey(mid, pid);
+  const jugo = document.getElementById('manual-jugo').value === '1';
+  playerStats[key] = {
+    jugo,
+    minutos: jugo ? parseInt(document.getElementById('manual-minutos').value)||0 : 0,
+    goles: jugo ? parseInt(document.getElementById('manual-goles').value)||0 : 0,
+    asistencias: jugo ? parseInt(document.getElementById('manual-asistencias').value)||0 : 0,
+    amarillas: jugo ? parseInt(document.getElementById('manual-amarillas').value)||0 : 0,
+    rojas: jugo ? parseInt(document.getElementById('manual-rojas').value)||0 : 0,
+  };
+  savePlayerStats();
+  showNotif('Stats guardadas');
+  renderManualStatsTable();
+  // Reset
+  ['manual-goles','manual-asistencias','manual-amarillas','manual-rojas'].forEach(id=>document.getElementById(id).value=0);
+  document.getElementById('manual-minutos').value=90;
+}
+
+function renderManualStatsTable() {
+  const rows = [];
+  Object.entries(playerStats).forEach(([key, s]) => {
+    const [mid, pid] = key.split('_');
+    const m = matches.find(x=>x.id==mid);
+    const p = players.find(x=>x.id==pid);
+    if (!m||!p) return;
+    rows.push(`<tr>
+      <td><strong>${p.nombre}</strong></td>
+      <td style="font-size:12px">vs. ${m.rival}</td>
+      <td>${s.jugo?'<span class="badge badge-ok">✅</span>':'<span class="badge badge-danger">❌</span>'}</td>
+      <td>${s.minutos||0}'</td>
+      <td>${s.goles||0}</td>
+      <td>${s.asistencias||0}</td>
+      <td>${s.amarillas||0}</td>
+      <td>${s.rojas||0}</td>
+      <td><button class="btn btn-danger btn-sm" onclick="deleteStatRow('${key}')">🗑️</button></td>
+    </tr>`);
+  });
+  document.getElementById('manual-stats-tbody').innerHTML = rows.length ? rows.join('') 
+    : '<tr><td colspan="9" style="text-align:center;color:var(--text2);padding:20px">Sin stats cargadas aún</td></tr>';
+}
+
+function deleteStatRow(key) {
+  if (!confirm('¿Eliminar este registro?')) return;
+  delete playerStats[key];
+  savePlayerStats();
+  renderManualStatsTable();
+  showNotif('Registro eliminado');
+}
+
+// Al abrir modal de partido jugado, cargar lista de jugadores para stats
+const _origToggleResultado = toggleResultado;
+toggleResultado = function() {
+  _origToggleResultado();
+  if (document.getElementById('m-jugado').checked) {
+    renderMatchPlayerStatsForm();
+  }
+};
+
+function renderMatchPlayerStatsForm() {
+  const container = document.getElementById('match-player-stats');
+  const mid = document.getElementById('edit-match-id').value;
+  container.innerHTML = [...players].sort((a,b)=>(a.numero||99)-(b.numero||99)).map(p => {
+    const key = mid ? getStatKey(mid, p.id) : '';
+    const s = mid && playerStats[key] ? playerStats[key] : {};
+    return `<div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:8px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+        <input type="checkbox" id="mps-jugo-${p.id}" ${s.jugo?'checked':''} onchange="toggleMatchPlayerRow(${p.id})">
+        <label for="mps-jugo-${p.id}" style="font-weight:600;cursor:pointer">#${p.numero||'?'} ${p.nombre}</label>
+        <span style="font-size:12px;color:var(--text2)">${p.puestoReal||p.posicion}</span>
+      </div>
+      <div id="mps-row-${p.id}" style="${s.jugo?'':'display:none'};display:${s.jugo?'grid':'none'};grid-template-columns:repeat(5,1fr);gap:8px">
+        <div><div style="font-size:10px;color:var(--text2);margin-bottom:3px">Min</div><input class="form-input" id="mps-min-${p.id}" type="number" min="0" max="90" value="${s.minutos||90}" style="padding:5px 8px;font-size:13px"></div>
+        <div><div style="font-size:10px;color:var(--text2);margin-bottom:3px">Goles</div><input class="form-input" id="mps-gol-${p.id}" type="number" min="0" value="${s.goles||0}" style="padding:5px 8px;font-size:13px"></div>
+        <div><div style="font-size:10px;color:var(--text2);margin-bottom:3px">Asist.</div><input class="form-input" id="mps-asi-${p.id}" type="number" min="0" value="${s.asistencias||0}" style="padding:5px 8px;font-size:13px"></div>
+        <div><div style="font-size:10px;color:var(--text2);margin-bottom:3px">🟨</div><input class="form-input" id="mps-am-${p.id}" type="number" min="0" max="2" value="${s.amarillas||0}" style="padding:5px 8px;font-size:13px"></div>
+        <div><div style="font-size:10px;color:var(--text2);margin-bottom:3px">🟥</div><input class="form-input" id="mps-ro-${p.id}" type="number" min="0" max="1" value="${s.rojas||0}" style="padding:5px 8px;font-size:13px"></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleMatchPlayerRow(pid) {
+  const jugo = document.getElementById('mps-jugo-' + pid).checked;
+  const row = document.getElementById('mps-row-' + pid);
+  row.style.display = jugo ? 'grid' : 'none';
+}
+
+// Override saveMatch para también guardar stats de jugadores
+const _origSaveMatch = saveMatch;
+saveMatch = function() {
+  // Primero guardar el partido (obtiene el ID)
+  const jugado = document.getElementById('m-jugado').checked;
+  const editId = document.getElementById('edit-match-id').value;
+  
+  _origSaveMatch();
+  
+  // Si estaba jugado, guardar stats de jugadores
+  if (jugado) {
+    // Obtener el ID del partido recién guardado
+    const mid = editId || (matches[matches.length-1] && matches[matches.length-1].id);
+    if (mid) {
+      players.forEach(p => {
+        const jugoEl = document.getElementById('mps-jugo-' + p.id);
+        if (jugoEl) {
+          const key = getStatKey(mid, p.id);
+          const jugo = jugoEl.checked;
+          if (jugo) {
+            playerStats[key] = {
+              jugo: true,
+              minutos: parseInt(document.getElementById('mps-min-' + p.id)?.value)||90,
+              goles: parseInt(document.getElementById('mps-gol-' + p.id)?.value)||0,
+              asistencias: parseInt(document.getElementById('mps-asi-' + p.id)?.value)||0,
+              amarillas: parseInt(document.getElementById('mps-am-' + p.id)?.value)||0,
+              rojas: parseInt(document.getElementById('mps-ro-' + p.id)?.value)||0,
+            };
+          } else {
+            playerStats[key] = { jugo: false, minutos:0, goles:0, asistencias:0, amarillas:0, rojas:0 };
+          }
+        }
+      });
+      savePlayerStats();
+    }
+  }
+};
+
+
+// ============================================================
+// IMPORTADOR DE PARTIDOS DESDE LIGA
+// ============================================================
+let parsedMatch = null;
+
+function openImportMatch() {
+  document.getElementById('import-text').value = '';
+  document.getElementById('import-preview').style.display = 'none';
+  document.getElementById('btn-confirm-import').style.display = 'none';
+  openModal('modal-import');
+}
+
+function parseImportText() {
+  const text = document.getElementById('import-text').value.trim();
+  if (!text) { alert('Pegá el texto del partido primero'); return; }
+  try {
+    const rawLines = text.replace(/\r/g,'').split('\n').map(l=>l.trim()).filter(l=>l.length>0);
+    const normStr = s => s.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();
+
+    // Equipos: primeras dos líneas con formato "NOMBRE (N)"
+    const rLines = [];
+    for (const l of rawLines) {
+      const m = l.match(/^(.+?)\s*\((\d+)\)\s*$/);
+      if (m) rLines.push({name:m[1].trim(), goles:parseInt(m[2])});
+      if (rLines.length===2) break;
+    }
+    if (rLines.length<2) throw new Error('No se detectaron equipos');
+    const localName=rLines[0].name, localGoles=rLines[0].goles;
+    const visitName=rLines[1].name, visitGoles=rLines[1].goles;
+    const somoLocal = normStr(localName).includes('AZULGRANA') ||
+                      (normStr(localName).includes('OBC') && !normStr(visitName).includes('OBC'));
+    const rival=somoLocal?visitName:localName;
+    const golesA=somoLocal?localGoles:visitGoles, golesR=somoLocal?visitGoles:localGoles;
+
+    // Fecha/cancha/torneo
+    const fLine=rawLines.find(l=>l.includes('Fecha:'))||'';
+    const fecha=((fLine.match(/Fecha:\s*([\d-]+)/)||[])[1]||'');
+    const cancha=(((fLine.match(/Cancha:\s*(.+?)(?:,|$)/)||[])[1])||'').trim();
+    const tLine=rawLines.find(l=>l.includes('Torneo:'))||'';
+    const t1=((tLine.match(/Torneo:\s*(.+?),/)||[])[1]||'').trim();
+    const t2=((tLine.match(/Rueda:\s*(\d+)/)||[])[1]||'');
+    const t3=((tLine.match(/Divisional:\s*(.+?)$/)||[])[1]||'').trim();
+    const torneo=t1+(t2?' R'+t2:'')+(t3?' · '+t3:'');
+
+    // Helper: encontrar índice de una sección
+    function findSection(keyword) {
+      for (let i=0;i<rawLines.length;i++) {
+        if (rawLines[i].toLowerCase().includes(keyword.toLowerCase())) return i;
+      }
+      return -1;
+    }
+
+    // Extraer titulares: línea que empieza con la sección, jugadores en formato NOMBRE (num)
+    function extractPlayers(txt) {
+      const found=[];
+      const reg=/([A-Z][A-Z\s\.\']+?)(\s*\(C\))?\s*\((\d+)\)/g;
+      let m;
+      while ((m=reg.exec(txt))!==null) {
+        const nombre=m[1].trim();
+        if (nombre.length>1) found.push({nombre, numero:m[3], capitan:!!m[2]});
+      }
+      return found;
+    }
+
+    const titKey = somoLocal ? 'Titulares Locatario' : 'Titulares Visitante';
+    let titulares=[];
+    for (let i=0;i<rawLines.length;i++) {
+      if (rawLines[i].includes(titKey)) {
+        const resto=rawLines[i].replace(titKey,'').trim();
+        titulares=extractPlayers(resto.length>5?resto:(rawLines[i+1]||''));
+        break;
+      }
+    }
+
+    // Cambios: formato "Sale" / NOMBRE / MINUTO / "Entra" / NOMBRE
+    // O formato manual: "* NOMBRE MINUTO' NOMBRE"
+    const suf = somoLocal?'Locatario':'Visitante';
+    const oSuf = somoLocal?'Visitante':'Locatario';
+    const cambios=[];
+    let idxCambios=findSection('Cambios '+suf);
+    if (idxCambios>=0) {
+      let i=idxCambios+1;
+      while (i<rawLines.length) {
+        const l=rawLines[i];
+        // Fin de sección
+        if (/^(Titulares|Goles|Expulsados|Amonestados|Cambios|Jueces)/i.test(l) && !l.toLowerCase().includes('cambios '+suf.toLowerCase())) break;
+        // Formato web: "Sale" seguido de nombre, minuto, "Entra", nombre
+        if (l.toLowerCase()==='sale') {
+          const sale=rawLines[i+1]||'';
+          const min=(rawLines[i+2]||'').replace("'",'');
+          // i+3 debería ser "Entra"
+          const entra=rawLines[i+4]||'';
+          if (sale && min && entra) {
+            cambios.push({sale:sale.trim(), minuto:min.trim(), entra:entra.trim()});
+            i+=5; continue;
+          }
+        }
+        // Formato manual: "* NOMBRE MINUTO' NOMBRE" o "* NOMBREMINUTO'NOMBRE"  
+        if (l.startsWith('*')) {
+          const m=l.replace(/^\*\s*/,'').match(/^(.+?)(\d+)'(.+)$/);
+          if (m) cambios.push({sale:m[1].trim(), minuto:m[2], entra:m[3].trim()});
+        }
+        i++;
+      }
+    }
+
+    // Goles: formato web - "* NOMBRE" o "NOMBRE" seguido de minuto
+    // O formato manual: "* NOMBRE MINUTO'"
+    const goleadores=[];
+    let idxGoles=findSection('Goles '+suf);
+    if (idxGoles>=0) {
+      let i=idxGoles+1;
+      while (i<rawLines.length) {
+        const l=rawLines[i];
+        if (/^(Expulsados|Amonestados|Titulares|Cambios)/i.test(l)) break;
+        if (l.includes('No se encontr')) { i++; continue; }
+        // Formato manual: "* NOMBRE MINUTO'"
+        if (l.startsWith('*')) {
+          const clean=l.replace(/^\*\s*/,'');
+          const m=clean.match(/^(.+?)\s+(\d+)'\s*$/);
+          if (m) goleadores.push({nombre:m[1].trim(), minuto:m[2]});
+        } else if (l && !/^(Goles|Expulsados|Amonestados)/i.test(l)) {
+          // Formato web: línea con nombre, próxima con minuto
+          const next=rawLines[i+1]||'';
+          const mMin=next.match(/^(\d+)'$/);
+          if (mMin) { goleadores.push({nombre:l.trim(), minuto:mMin[1]}); i+=2; continue; }
+        }
+        i++;
+      }
+    }
+
+    // Amonestados
+    const amonestados=[];
+    let idxAmon=findSection('Amonestados '+suf);
+    if (idxAmon>=0) {
+      let i=idxAmon+1;
+      while (i<rawLines.length) {
+        const l=rawLines[i];
+        if (/^(Titulares|Cambios|Goles|Expulsados)/i.test(l) && !l.toLowerCase().includes('amonestados')) break;
+        if (!l.includes('No se encontr') && l && !/^(Amonestados)/i.test(l)) {
+          const clean=l.replace(/^\*\s*/,'').trim();
+          if (clean) amonestados.push(clean);
+        }
+        i++;
+      }
+    }
+
+    // Expulsados
+    const expulsados=[];
+    let idxExp=findSection('Expulsados '+suf);
+    if (idxExp>=0) {
+      let i=idxExp+1;
+      while (i<rawLines.length) {
+        const l=rawLines[i];
+        if (/^(Amonestados|Titulares|Cambios|Goles)/i.test(l)) break;
+        if (!l.includes('No se encontr') && l) {
+          const clean=l.replace(/^\*\s*/,'').trim();
+          if (clean) expulsados.push(clean);
+        }
+        i++;
+      }
+    }
+
+    // Match player
+    function matchPlayer(nLiga) {
+      const nL=normStr(nLiga), wL=nL.split(' ').filter(w=>w.length>2);
+      function lev(a,b){if(a.length<b.length){let t=a;a=b;b=t;}if(!b.length)return a.length;
+        let p=Array.from({length:b.length+1},(_,i)=>i);
+        for(let i=0;i<a.length;i++){let c=[i+1];for(let j=0;j<b.length;j++)c.push(Math.min(p[j+1]+1,c[j]+1,p[j]+(a[i]===b[j]?0:1)));p=c;}return p[b.length];}
+      let best=0,bestP=null;
+      players.forEach(p=>{const nP=normStr(p.nombre),wP=nP.split(' ').filter(w=>w.length>2);let s=0;
+        wP.forEach(a=>wL.forEach(b=>{if(a===b)s+=10;else if(a.includes(b)||b.includes(a))s+=6;else if(a.length>4&&lev(a,b)<=2)s+=4;}));
+        if(s>best){best=s;bestP=p;}});
+      return best>=6?bestP:null;
+    }
+
+    console.log('IMPORT DEBUG',{somoLocal,rival,golesA,golesR,
+      tit:titulares.map(t=>t.nombre), goles:goleadores, cambios:cambios.length, amonestados});
+
+    parsedMatch={rival,fecha,cancha,torneo,condicion:somoLocal?'local':'visitante',
+      jugado:true,golesA,golesR,amarillas:amonestados.length,rojas:expulsados.length,notas:'',
+      titulares,goleadores,amonestados,expulsados,cambios,
+      localName,visitName,localGoles,visitGoles,_matchPlayer:matchPlayer};
+
+    const res=golesA>golesR?'🟢 Victoria':golesA===golesR?'🟡 Empate':'🔴 Derrota';
+    const titHtml=titulares.length>0
+      ?titulares.map(t=>{const p=matchPlayer(t.nombre);
+        return '<span class="badge '+(p?'badge-ok':'badge-warn')+'" style="margin:2px">'+(p?p.nombre:t.nombre)+(t.capitan?' (C)':'')+'</span>';}).join('')
+      :'<span style="color:var(--text2)">No detectados</span>';
+    const golesHtml=goleadores.length
+      ?goleadores.map(g=>{const p=matchPlayer(g.nombre);
+        return '<div style="font-size:13px;padding:3px 0">⚽ '+g.minuto+'\' <strong>'+(p?p.nombre:g.nombre)+'</strong>'+(p?'':' <span class="badge badge-warn">?</span>')+'</div>';}).join('')
+      :'<div style="font-size:13px;color:var(--text2)">Sin goles</div>';
+    const amonHtml=amonestados.length
+      ?amonestados.map(a=>{const p=matchPlayer(a);
+        return '<div style="font-size:13px">🟨 '+(p?p.nombre:a)+(p?'':' <span class="badge badge-warn">?</span>')+'</div>';}).join('')
+      :'<div style="font-size:13px;color:var(--text2)">Ninguno</div>';
+    const cambHtml=cambios.length
+      ?cambios.map(c=>'<div style="font-size:12px;color:var(--text2)">'+c.minuto+'\' ↑'+c.entra+' ↓'+c.sale+'</div>').join('')
+      :'<div style="font-size:13px;color:var(--text2)">Sin cambios</div>';
+
+    document.getElementById('import-preview-content').innerHTML=
+      '<div style="background:var(--bg3);border-radius:10px;padding:16px;margin-bottom:14px">'+
+        '<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:22px;font-weight:800">'+localName+' '+localGoles+' — '+visitGoles+' '+visitName+'</div>'+
+        '<div style="font-size:13px;color:var(--text2)">'+fecha+' · '+cancha+'</div>'+
+        '<div style="margin-top:8px"><span class="badge '+(golesA>golesR?'badge-ok':golesA===golesR?'badge-warn':'badge-danger')+'">'+res+'</span>'+
+        '<span style="margin-left:8px;font-size:13px;color:var(--text2)">'+(somoLocal?'🏠 Local':'✈️ Visitante')+'</span></div>'+
+      '</div>'+
+      '<div class="grid-2" style="gap:14px">'+
+        '<div><div class="section-divider">Titulares (verde=en plantel)</div><div style="line-height:2">'+titHtml+'</div></div>'+
+        '<div><div class="section-divider">Goles</div>'+golesHtml+
+          '<div class="section-divider" style="margin-top:10px">Amarillas</div>'+amonHtml+
+          '<div class="section-divider" style="margin-top:10px">Cambios ('+cambios.length+')</div>'+cambHtml+'</div>'+
+      '</div>';
+
+    document.getElementById('import-preview').style.display='block';
+    document.getElementById('btn-confirm-import').style.display='inline-flex';
+  } catch(e) {
+    alert('Error al parsear: '+e.message);
+    console.error(e);
+  }
+}
+function confirmImport() {
+  if (!parsedMatch) return;
+
+  // Guardar partido
+  const matchData = {
+    id: Date.now(),
+    rival: parsedMatch.rival,
+    fecha: parsedMatch.fecha,
+    hora: '',
+    lugar: parsedMatch.cancha,
+    torneo: parsedMatch.torneo,
+    condicion: parsedMatch.condicion,
+    jugado: true,
+    golesA: parsedMatch.golesA,
+    golesR: parsedMatch.golesR,
+    amarillas: parsedMatch.amarillas,
+    rojas: parsedMatch.rojas,
+    notas: parsedMatch.goleadores.map(g => `⚽ ${g.nombre} ${g.minuto}'`).join(', '),
+    titulares: parsedMatch.titulares,
+    goleadores: parsedMatch.goleadores,
+    amonestados: parsedMatch.amonestados,
+    expulsados: parsedMatch.expulsados,
+    cambios: parsedMatch.cambios
+  };
+  matches.push(matchData);
+  saveMatches();
+
+  // Usar el matchPlayer ya definido en parsedMatch
+  const matchPlayer = parsedMatch._matchPlayer;
+
+  const mid = matchData.id;
+
+  // Titulares
+  parsedMatch.titulares.forEach(t => {
+    const p = matchPlayer(t.nombre);
+    if (p) {
+      const key = getStatKey(mid, p.id);
+      playerStats[key] = { jugo: true, minutos: 90, goles: 0, asistencias: 0, amarillas: 0, rojas: 0 };
+    }
+  });
+
+  // Cambios: el que entra juega menos, el que sale también actualizar minutos
+  parsedMatch.cambios.forEach(c => {
+    const sale = matchPlayer(c.sale);
+    const entra = matchPlayer(c.entra);
+    const min = parseInt(c.minuto) || 90;
+    if (sale) {
+      const key = getStatKey(mid, sale.id);
+      if (playerStats[key]) playerStats[key].minutos = min;
+      else playerStats[key] = { jugo: true, minutos: min, goles: 0, asistencias: 0, amarillas: 0, rojas: 0 };
+    }
+    if (entra) {
+      const key = getStatKey(mid, entra.id);
+      playerStats[key] = { jugo: true, minutos: 90 - min, goles: 0, asistencias: 0, amarillas: 0, rojas: 0 };
+    }
+  });
+
+  // Goles
+  parsedMatch.goleadores.forEach(g => {
+    const p = matchPlayer(g.nombre);
+    if (p) {
+      const key = getStatKey(mid, p.id);
+      if (playerStats[key]) playerStats[key].goles++;
+      else playerStats[key] = { jugo: true, minutos: 90, goles: 1, asistencias: 0, amarillas: 0, rojas: 0 };
+    }
+  });
+
+  // Amonestados
+  parsedMatch.amonestados.forEach(a => {
+    const p = matchPlayer(a);
+    if (p) {
+      const key = getStatKey(mid, p.id);
+      if (playerStats[key]) playerStats[key].amarillas++;
+      else playerStats[key] = { jugo: true, minutos: 90, goles: 0, asistencias: 0, amarillas: 1, rojas: 0 };
+    }
+  });
+
+  // Expulsados
+  parsedMatch.expulsados.forEach(e => {
+    const p = matchPlayer(e);
+    if (p) {
+      const key = getStatKey(mid, p.id);
+      if (playerStats[key]) playerStats[key].rojas++;
+      else playerStats[key] = { jugo: true, minutos: 90, goles: 0, asistencias: 0, amarillas: 0, rojas: 1 };
+    }
+  });
+
+  savePlayerStats();
+  parsedMatch = null;
+  closeModal('modal-import');
+  renderFixture();
+  renderDashboard();
+  showNotif('¡Partido importado con stats automáticas!');
 }
 
 </script>
